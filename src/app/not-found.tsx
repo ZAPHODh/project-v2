@@ -1,0 +1,10 @@
+export default function NotFound() {
+  return (
+    <section>
+      <h1 className="mb-8 text-2xl font-semibold tracking-tighter">
+        404 - Página não encontrada
+      </h1>
+      <p className="mb-4">A página que voce está procurando não existe.</p>
+    </section>
+  );
+}
