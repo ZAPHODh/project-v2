@@ -17,7 +17,11 @@ declare module "next-auth/jwt" {
     subscriptionRole: string | null;
   }
 }
-
+declare module "next-auth/session" {
+  interface Session {
+    subscriptionRole: string | null;
+  }
+}
 declare module "@auth/core/adapters" {
   interface AdapterUser {
     subscriptionRole: string | null;

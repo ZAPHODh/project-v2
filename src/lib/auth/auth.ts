@@ -6,9 +6,12 @@ import { prisma } from "../../../prisma/prisma";
 import type { Adapter } from "next-auth/adapters";
 import Apple from "next-auth/providers/apple";
 import bcrypt from "bcryptjs";
+import page from "../../app/logout/page";
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
+  secret: process.env.NEXTAUTH_SECRET,
   adapter: PrismaAdapter(prisma) as Adapter,
+  session: { strategy: "jwt" },
   providers: [
     Google({
       profile(profile) {
@@ -71,23 +74,19 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
   callbacks: {
     async jwt({ token, user }) {
       if (user) {
-        if (user) {
-          const dbUser = await prisma.user.findUnique({
-            where: { id: user.id },
-          });
-          token.subscriptionRole = dbUser?.subscriptionRole || null;
-        }
         token.subscriptionRole = user.subscriptionRole || null;
       }
+      console.log(token);
       return token;
     },
     async session({ session, token }) {
-      console.log("nao chegou aqui");
+      console.log("chegou aqui");
       if (token) {
         session.user.subscriptionRole = token.subscriptionRole;
       }
-      console.log(token);
+
       return session;
     },
   },
+  pages: { signIn: "/login" },
 });
