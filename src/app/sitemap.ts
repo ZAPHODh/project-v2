@@ -1,6 +1,6 @@
 import { ROUTES } from "@/lib/routes-config";
 
-export const baseUrl = process.env.BASE_URL;
+export const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
 
 export default async function sitemap() {
   const allRoutes = ROUTES.flatMap((route) => {

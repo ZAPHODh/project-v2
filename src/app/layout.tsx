@@ -26,8 +26,9 @@ export const metadata: Metadata = {
   description: "página feita para auxiliar financeiramente um salão de beleza",
   metadataBase: new URL(baseUrl as string),
   openGraph: {
-    title: "Meu portifólio",
-    description: "Conheça meus projetos.",
+    title: "PL Project",
+    description:
+      "ágina feita para auxiliar financeiramente um salão de beleza.",
     url: baseUrl,
     siteName: "Por",
     locale: "pt_br",

@@ -27,7 +27,8 @@
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts",
-    "src/components/anchor.tsx3"
+    "src/components/anchor.tsx3",
+    "src/types/**/*.d.ts"
   ],
   "exclude": ["node_modules"]
 }

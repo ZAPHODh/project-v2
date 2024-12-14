@@ -1,5 +1,5 @@
 "use client";
-
+import { signOut } from "next-auth/react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
@@ -14,7 +14,7 @@ export const AccountNav = () => {
   const route = usePathname();
 
   return (
-    <div className="flex h-full lg:justify-center lg:items-center p-4 lg:px-4 ">
+    <div className="flex h-full lg:justify-center lg:items-center p-4 lg:px-4">
       <ul className="flex flex-row w-full lg:flex-col lg:gap-4 justify-evenly items-center lg:items-start">
         {PAGELINKS.map((link) => {
           const isActive = route === link.href;
@@ -30,9 +30,12 @@ export const AccountNav = () => {
           );
         })}
         <li className="flex-1 text-center">
-          <Link href={"/logout"} className="block py-2 px-4">
+          <button
+            onClick={() => signOut({ callbackUrl: "/" })}
+            className="block py-2 px-4"
+          >
             Sair
-          </Link>
+          </button>
         </li>
       </ul>
     </div>

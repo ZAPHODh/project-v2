@@ -7,8 +7,8 @@ export default function AccountLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <div className="flex items-start flex-col py-7 ">
-      <div className=" flex flex-col  lg:flex-row w-full">
+    <div className="w-full">
+      <div className=" flex flex-col lg:flex-row w-full">
         <AccountNav />
         <div className="flex-[4]">{children}</div>
       </div>
