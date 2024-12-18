@@ -1,5 +1,4 @@
 import type { MDXComponents } from "mdx/types";
-import Image, { ImageProps } from "next/image";
 
 export function useMDXComponents(components: MDXComponents): MDXComponents {
   return {
@@ -16,18 +15,6 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
     ),
     ol: ({ children }) => (
       <ol className="list-decimal pl-5 space-y-2">{children}</ol>
-    ),
-    img: (props) => (
-      <Image
-        sizes="100vw"
-        style={{
-          width: "100%",
-          height: "auto",
-          borderRadius: "8px",
-          boxShadow: "0 4px 10px rgba(0,0,0,0.1)",
-        }}
-        {...(props as ImageProps)}
-      />
     ),
     blockquote: ({ children }) => (
       <blockquote className="pl-4 border-l-4 border-blue-500 italic">

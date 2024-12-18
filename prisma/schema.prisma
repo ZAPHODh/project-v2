@@ -1,86 +1,143 @@
 datasource db {
-    provider = "postgresql"
-    url      = env("DATABASE_URL")
-  }
-   
-  generator client {
-    provider = "prisma-client-js"
-  }
-   
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
 model User {
-  id            String          @id @default(cuid())
-  name          String?
-  email         String          @unique
-  emailVerified DateTime?
-  image         String?
-  password             String?  
-  accounts      Account[]
-  sessions      Session[]
-  Authenticator Authenticator[]    
+  id               String          @id @default(cuid())
+  name             String?
+  email            String          @unique
+  emailVerified    DateTime?
+  image            String?
+  password         String?
+  accounts         Account[]
+  sessions         Session[]
+  Authenticator    Authenticator[]    
   subscriptionId   String? 
   subscriptionRole String? 
   subscriptionStatus String? 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt        DateTime        @default(now())
+  updatedAt        DateTime        @updatedAt
+
+  salons           Salon[]       
 }
 
-   
-  model Account {
-    userId            String
-    type              String
-    provider          String
-    providerAccountId String
-    refresh_token     String?
-    access_token      String?
-    expires_at        Int?
-    token_type        String?
-    scope             String?
-    id_token          String?
-    session_state     String?
-   
-    createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt
-   
-    user User @relation(fields: [userId], references: [id], onDelete: Cascade)
-   
-    @@id([provider, providerAccountId])
+model Account {
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String?
+  access_token      String?
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String?
+  session_state     String?
 
- 
-  }
-   
-  model Session {
-    sessionToken String   @unique
-    userId       String
-    expires      DateTime
-    user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-   
-    createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
 
+  user              User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-  }
-   
-  model VerificationToken {
-    identifier String
-    token      String
-    expires    DateTime
-   
-    @@id([identifier, token])
+  @@id([provider, providerAccountId])
+}
 
-  }
-   
-  // Optional for WebAuthn support
-  model Authenticator {
-    credentialID         String  @unique
-    userId               String
-    providerAccountId    String
-    credentialPublicKey  String
-    counter              Int
-    credentialDeviceType String
-    credentialBackedUp   Boolean
-    transports           String?
-   
-    user User @relation(fields: [userId], references: [id], onDelete: Cascade)
-   
+model Session {
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-  }
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+model VerificationToken {
+  identifier String
+  token      String
+  expires    DateTime
+
+  @@id([identifier, token])
+}
+
+model Authenticator {
+  credentialID         String  @unique
+  userId               String
+  providerAccountId    String
+  credentialPublicKey  String
+  counter              Int
+  credentialDeviceType String
+  credentialBackedUp   Boolean
+  transports           String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+// Novos modelos adicionados
+model Salon {
+  id          String          @id @default(cuid())
+  name        String
+  address     String
+  ownerId     String
+  createdAt   DateTime        @default(now())
+  updatedAt   DateTime        @updatedAt
+
+  owner       User            @relation(fields: [ownerId], references: [id], onDelete: Cascade)
+  professionals Professional[]
+  services     Service[]
+  expenses     Expense[]
+  taxes        Tax[]
+}
+
+model Professional {
+  id        String      @id @default(cuid())
+  name      String
+  salonId   String
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @updatedAt
+
+  salon     Salon       @relation(fields: [salonId], references: [id], onDelete: Cascade)
+  services  Service[]   @relation("ProfessionalServices")
+}
+
+model Service {
+  id          String           @id @default(cuid())
+  name        String
+  description String?
+  price       Float
+  duration    Int             
+  salonId     String
+  createdAt   DateTime         @default(now())
+  updatedAt   DateTime         @updatedAt
+
+  salon       Salon            @relation(fields: [salonId], references: [id], onDelete: Cascade)
+  professionals Professional[] @relation("ProfessionalServices")
+}
+
+model Expense {
+  id          String      @id @default(cuid())
+  name        String
+  amount      Float
+  type        String      
+  salonId     String
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+
+  salon       Salon       @relation(fields: [salonId], references: [id], onDelete: Cascade)
+}
+
+model Tax {
+  id          String      @id @default(cuid())
+  name        String
+  percentage  Float
+  salonId     String
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+
+  salon       Salon       @relation(fields: [salonId], references: [id], onDelete: Cascade)
+}
