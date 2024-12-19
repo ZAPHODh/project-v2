@@ -7,7 +7,7 @@ const AccountFooter = () => {
       <div className="w-full">
         <h3 className="font-semibold mb-4">Dúvidas??</h3>
         <span className="txt-medium">
-          Voce pode perguntar em nosso serviço de ajuda!
+          Nosso serviço ao cliente pode te ajudar!
         </span>
       </div>
       <div>

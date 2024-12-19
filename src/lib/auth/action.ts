@@ -7,7 +7,6 @@ export const signInWithCredentials = async (formData: FormData) => {
   return await signIn("credentials", {
     email: getFormDataValue("email", formData),
     password: getFormDataValue("password", formData),
-    redirect: false,
   });
 };
 export const signInWithGoogle = async () => {

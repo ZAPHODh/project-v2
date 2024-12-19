@@ -1,8 +1,18 @@
-// app/api/signup/route.ts
-
 import { NextResponse } from "next/server";
 import bcrypt from "bcryptjs";
 import { prisma } from "../../../../prisma/prisma";
+
+export async function GET() {
+  try {
+    const users = await prisma.user.findMany();
+    return NextResponse.json(users);
+  } catch (error) {
+    return NextResponse.json(
+      { error: (error as Error).message },
+      { status: 500 }
+    );
+  }
+}
 
 export async function POST(req: Request) {
   try {

@@ -1,7 +1,7 @@
 export default function TheProblem() {
   return (
-    <section className="py-[100px] w-full ">
-      <div className="container mx-auto text-left w-full">
+    <section className="py-[100px] w-full">
+      <div className="container mx-auto text-center w-full">
         <h3 className="mb-4 text-sm font-semibold uppercase tracking-wide text-purple-600">
           O PROBLEMA
         </h3>

@@ -78,7 +78,7 @@ model Authenticator {
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
-// Novos modelos adicionados
+
 model Salon {
   id          String          @id @default(cuid())
   name        String

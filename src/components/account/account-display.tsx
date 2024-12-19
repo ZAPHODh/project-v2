@@ -1,41 +1,50 @@
 "use client";
 
 import { ModalProvider } from "@/lib/context/modal-context";
-import { Account } from "@/lib/data/types";
+
 import { useState } from "react";
 import EditFieldModal from "./edit-field-modal";
 import { Button } from "../ui/button";
-import { editAccount } from "@/lib/data/api-data";
+
+import { User } from "@prisma/client";
+import { editUser } from "@/lib/data/api-data";
+import UpgradeBanner from "../upgrade-banner";
 
 type AccountDisplayProps = {
-  account: Account;
+  account: Partial<User>;
 };
 
 const AccountDisplay: React.FC<AccountDisplayProps> = ({ account }) => {
+  const [cachedAccount, setCachedAccount] = useState<Partial<User>>(account);
   const [isModalOpen, setModalOpen] = useState(false);
   const [currentField, setCurrentField] = useState<{
-    key: keyof Account;
+    key: keyof User;
     value: string;
   } | null>(null);
 
-  const handleEditClick = (key: keyof Account, value: string) => {
+  const handleEditClick = (key: keyof User, value: string) => {
     setCurrentField({ key, value });
     setModalOpen(true);
   };
 
-  const handleSave = async (key: keyof Account, value: string) => {
-    await editAccount({
-      id: account._id,
-      key,
-      value,
-    });
-    setModalOpen(false);
+  const handleSave = async (key: keyof User, value: string) => {
+    try {
+      await editUser({
+        id: account.id!,
+        key,
+        value,
+      });
+      setModalOpen(false);
+      setCachedAccount((prevAccout) => ({ ...prevAccout, [key]: value }));
+    } catch (error) {
+      alert("Erro ao salvar a alteração.");
+    }
   };
 
   return (
     <div className="w-full lg:p-5 ">
-      {Object.entries(account)
-        .filter(([key]) => key !== "_id")
+      {Object.entries(cachedAccount)
+        .filter(([key]) => key !== "id")
         .map(([key, value]) => (
           <div
             key={key}
@@ -43,10 +52,19 @@ const AccountDisplay: React.FC<AccountDisplayProps> = ({ account }) => {
           >
             <div>
               <h3 className="font-semibold capitalize">{key}:</h3>
-              <p>{value}</p>
+              <p>
+                {value instanceof Date
+                  ? value.toLocaleDateString()
+                  : value || "N/A"}
+              </p>
             </div>
             <Button
-              onClick={() => handleEditClick(key as keyof Account, value)}
+              onClick={() =>
+                handleEditClick(
+                  key as keyof User,
+                  value instanceof Date ? value.toISOString() : value || ""
+                )
+              }
             >
               Editar
             </Button>
@@ -64,6 +82,7 @@ const AccountDisplay: React.FC<AccountDisplayProps> = ({ account }) => {
           />
         </ModalProvider>
       )}
+      {account.subscriptionRole ? <></> : <UpgradeBanner />}
     </div>
   );
 };
