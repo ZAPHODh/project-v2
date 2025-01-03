@@ -1,13 +1,24 @@
+"use server";
+import { auth } from "../auth/auth";
+
 export const fetchAPI = async (
   url: string,
   method: string,
   body?: any,
   options?: { tags?: string[] }
 ) => {
+  const session = await auth();
+
+  if (!session || !session.user) return;
+
+  const userId = session.user.id;
+
   const fetchOptions: RequestInit = {
     method,
+    credentials: "include",
     headers: {
       "Content-Type": "application/json",
+      ...(userId && { "X-User-Id": userId }),
     },
     body: body ? JSON.stringify(body) : undefined,
     next: options?.tags ? { tags: options.tags } : undefined,
@@ -20,7 +31,8 @@ export const fetchAPI = async (
 
   if (!response.ok) {
     const error = await response.json();
-    throw new Error(`Error: ${error.message || response.statusText}`);
+    console.log(error);
   }
+
   return response.json();
 };

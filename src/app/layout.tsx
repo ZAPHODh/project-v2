@@ -6,6 +6,7 @@ import { Space_Mono, Space_Grotesk } from "next/font/google";
 import { Navbar } from "@/components/navbar";
 import { baseUrl } from "./sitemap";
 import Footer from "@/components/footer";
+import CookieConsent from "@/components/cookie-consent";
 
 const regularFont = Space_Grotesk({
   subsets: ["latin"],
@@ -46,7 +47,19 @@ export const metadata: Metadata = {
     },
   },
 };
+export const NAVLINKS = [
+  { title: "Início", href: "/" },
+  {
+    title: "Cálculo de Lucratividade",
+    href: `/profit`,
+  },
 
+  { title: "Salão", href: "/salon" },
+  {
+    title: "Conta",
+    href: "/account",
+  },
+];
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -63,10 +76,11 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <Navbar />
-          <main className="flex flex-col items-center sm:container mx-auto w-[88vw]">
+          <Navbar navLinks={NAVLINKS} />
+          <main className="flex flex-col items-center sm:container mx-auto w-[88vw] max-w-screen">
             {children}
           </main>
+          <CookieConsent />
           <Footer />
         </ThemeProvider>
       </body>

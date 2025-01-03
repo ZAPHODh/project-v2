@@ -1,60 +1,172 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
-generator client {
-  provider = "prisma-client-js"
+model Professional {
+  id          String   @id @default(cuid())
+  name        String
+  categroy    String
+  cpf         String?
+  adress      String?
+  profile     String?
+  phone       String?
+  email       String?
+  description String?
+  salonId     String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  salon      Salon        @relation(fields: [salonId], references: [id], onDelete: Cascade)
+  services   Service[]    @relation("ProfessionalServices")
+  sales      Sale[]       @relation("ProfessionalSales")
+  Commission Commission[]
 }
 
-model User {
-  id               String          @id @default(cuid())
-  name             String?
-  email            String          @unique
-  emailVerified    DateTime?
-  image            String?
-  password         String?
-  accounts         Account[]
-  sessions         Session[]
-  Authenticator    Authenticator[]    
-  subscriptionId   String? 
-  subscriptionRole String? 
-  subscriptionStatus String? 
-  createdAt        DateTime        @default(now())
-  updatedAt        DateTime        @updatedAt
+model Customer {
+  id        String   @id @default(cuid())
+  name      String
+  city      String?
+  address   String?
+  genre     String?
+  phone     String?
+  email     String?
+  salonId   String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
-  salons           Salon[]       
+  salon Salon  @relation(fields: [salonId], references: [id], onDelete: Cascade)
+  sales Sale[]
 }
 
-model Account {
-  userId            String
-  type              String
-  provider          String
-  providerAccountId String
-  refresh_token     String?
-  access_token      String?
-  expires_at        Int?
-  token_type        String?
-  scope             String?
-  id_token          String?
-  session_state     String?
+model Sale {
+  id             String   @id @default(cuid())
+  salonId        String
+  customerId     String?
+  professionalId String?
+  totalAmount    Float
+  paymentMethod  String
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
 
-  createdAt         DateTime @default(now())
-  updatedAt         DateTime @updatedAt
-
-  user              User @relation(fields: [userId], references: [id], onDelete: Cascade)
-
-  @@id([provider, providerAccountId])
+  salon        Salon         @relation(fields: [salonId], references: [id], onDelete: Cascade)
+  customer     Customer?     @relation(fields: [customerId], references: [id], onDelete: SetNull)
+  professional Professional? @relation("ProfessionalSales", fields: [professionalId], references: [id])
+  items        SaleItem[]
 }
 
-model Session {
-  sessionToken String   @unique
-  userId       String
-  expires      DateTime
-  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+model SaleItem {
+  id        String  @id @default(cuid())
+  saleId    String
+  serviceId String?
+  productId String?
+  quantity  Int     @default(1)
+  price     Float
+  total     Float
 
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @updatedAt
+  sale    Sale     @relation(fields: [saleId], references: [id], onDelete: Cascade)
+  service Service? @relation(fields: [serviceId], references: [id], onDelete: SetNull)
+  product Product? @relation(fields: [productId], references: [id], onDelete: SetNull)
+}
+
+model Service {
+  id          String   @id @default(cuid())
+  name        String
+  description String?
+  price       Float
+  duration    Int
+  salonId     String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  salon         Salon          @relation(fields: [salonId], references: [id], onDelete: Cascade)
+  professionals Professional[] @relation("ProfessionalServices")
+  saleItems     SaleItem[]
+}
+
+model Product {
+  id          String   @id @default(cuid())
+  name        String
+  description String?
+  price       Float
+  stock       Int      @default(0)
+  salonId     String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  salon     Salon      @relation(fields: [salonId], references: [id], onDelete: Cascade)
+  saleItems SaleItem[]
+}
+
+model Salon {
+  id        String   @id @default(cuid())
+  ownerId   String
+  owner     User     @relation(fields: [ownerId], references: [id]) // Relacionamento com o modelo User
+  name      String
+  address   String
+  city      String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  professionals     Professional[]
+  customers         Customer[]
+  services          Service[]
+  products          Product[]
+  sales             Sale[]
+  expenses          Expense[]
+  expenseCategories ExpenseCategory[]
+  commissions       Commission[]
+  paymentMethods    PaymentMethod[]
+}
+
+model Expense {
+  id          String   @id @default(cuid())
+  description String
+  amount      Float
+  categoryId  String
+  salonId     String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  salon    Salon           @relation(fields: [salonId], references: [id], onDelete: Cascade)
+  category ExpenseCategory @relation(fields: [categoryId], references: [id])
+}
+
+model ExpenseCategory {
+  id        String   @id @default(cuid())
+  name      String
+  salonId   String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  salon    Salon     @relation(fields: [salonId], references: [id], onDelete: Cascade)
+  expenses Expense[]
+}
+
+model Commission {
+  id             String   @id @default(cuid())
+  percentage     Float
+  professionalId String
+  salonId        String
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  professional Professional @relation(fields: [professionalId], references: [id], onDelete: Cascade)
+  salon        Salon        @relation(fields: [salonId], references: [id], onDelete: Cascade)
+}
+
+model PaymentMethod {
+  id        String   @id @default(cuid())
+  name      String
+  salonId   String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  salon Salon @relation(fields: [salonId], references: [id], onDelete: Cascade)
 }
 
 model VerificationToken {
@@ -63,6 +175,16 @@ model VerificationToken {
   expires    DateTime
 
   @@id([identifier, token])
+}
+
+model Session {
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model Authenticator {
@@ -78,66 +200,42 @@ model Authenticator {
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
+model Account {
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String?
+  access_token      String?
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String?
+  session_state     String?
 
-model Salon {
-  id          String          @id @default(cuid())
-  name        String
-  address     String
-  ownerId     String
-  createdAt   DateTime        @default(now())
-  updatedAt   DateTime        @updatedAt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
-  owner       User            @relation(fields: [ownerId], references: [id], onDelete: Cascade)
-  professionals Professional[]
-  services     Service[]
-  expenses     Expense[]
-  taxes        Tax[]
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@id([provider, providerAccountId])
 }
 
-model Professional {
-  id        String      @id @default(cuid())
-  name      String
-  salonId   String
-  createdAt DateTime    @default(now())
-  updatedAt DateTime    @updatedAt
+model User {
+  id                 String          @id @default(cuid())
+  name               String?
+  email              String          @unique
+  emailVerified      DateTime?
+  image              String?
+  password           String?
+  accounts           Account[]
+  sessions           Session[]
+  Authenticator      Authenticator[]
+  subscriptionId     String?
+  subscriptionRole   String?
+  subscriptionStatus String?
+  createdAt          DateTime        @default(now())
+  updatedAt          DateTime        @updatedAt
 
-  salon     Salon       @relation(fields: [salonId], references: [id], onDelete: Cascade)
-  services  Service[]   @relation("ProfessionalServices")
-}
-
-model Service {
-  id          String           @id @default(cuid())
-  name        String
-  description String?
-  price       Float
-  duration    Int             
-  salonId     String
-  createdAt   DateTime         @default(now())
-  updatedAt   DateTime         @updatedAt
-
-  salon       Salon            @relation(fields: [salonId], references: [id], onDelete: Cascade)
-  professionals Professional[] @relation("ProfessionalServices")
-}
-
-model Expense {
-  id          String      @id @default(cuid())
-  name        String
-  amount      Float
-  type        String      
-  salonId     String
-  createdAt   DateTime    @default(now())
-  updatedAt   DateTime    @updatedAt
-
-  salon       Salon       @relation(fields: [salonId], references: [id], onDelete: Cascade)
-}
-
-model Tax {
-  id          String      @id @default(cuid())
-  name        String
-  percentage  Float
-  salonId     String
-  createdAt   DateTime    @default(now())
-  updatedAt   DateTime    @updatedAt
-
-  salon       Salon       @relation(fields: [salonId], references: [id], onDelete: Cascade)
+  salons Salon[]
 }

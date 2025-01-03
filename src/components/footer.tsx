@@ -11,7 +11,6 @@ export default function Footer() {
         <div className="grid grid-cols-2 gap-8 px-4 py-6 lg:py-8 md:grid-cols-4">
           {ROUTES.map(
             (route) =>
-              // Verifica se o item tem a chave dontShowNav para não renderizar
               !route.dontShowNav && (
                 <div key={route.title}>
                   <h2 className="mb-6 text-sm font-semibold text-gray-900 uppercase dark:text-white">
@@ -20,7 +19,6 @@ export default function Footer() {
                   <ul className="text-gray-500 dark:text-gray-400 font-medium">
                     {(route.items || []).map(
                       (item) =>
-                        // Verifica a chave dontShowNav para os itens também
                         !item.dontShowNav && (
                           <li key={item.href} className="mb-4">
                             <Link

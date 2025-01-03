@@ -13,9 +13,9 @@ export async function GET(
         id: true,
         name: true,
         email: true,
+        subscriptionRole: true,
       },
     });
-
     if (!user) {
       return NextResponse.json(
         { success: false, message: "Usuário não encontrado." },

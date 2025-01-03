@@ -22,7 +22,7 @@ export async function PUT(
 ) {
   const data = await req.json();
   const professional = await prisma.professional.update({
-    where: { id: params.id },
+    where: { id: await params.id },
     data,
   });
   return NextResponse.json(professional);

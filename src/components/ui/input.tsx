@@ -37,23 +37,23 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
             {topLabel}
           </span>
         )}
-        <div className="relative w-full">
+        <div className="relative w-full my-4">
           <input
             type={inputType}
             name={name}
             required={required}
             placeholder=" "
-            className="peer block w-full h-11 px-4 border rounded-md focus:outline-none focus:ring-2  focus:border-transparent "
+            className="peer block w-full h-11 px-4 border rounded-md focus:outline-none focus:ring-2 focus:border-transparent dark:text-black"
             ref={inputRef}
             value={value}
             {...props}
           />
           <label
             htmlFor={name}
-            className={`absolute left-3 top-14 text-gray-500 text-sm transition-all ${
+            className={`absolute left-3 top-[-20px] text-gray-500 text-sm transition-all ${
               value
-                ? "top-14 text-xs"
-                : "peer-placeholder-shown:top-3 peer-placeholder-shown:text-gray-400 peer-focus:top-14 peer-focus:text-xs"
+                ? "top-[-20px] text-xs"
+                : "peer-placeholder-shown:top-3 peer-placeholder-shown:text-gray-400 peer-focus:top-[-20px] peer-focus:text-xs"
             }`}
             onClick={() => inputRef.current?.focus()}
           >

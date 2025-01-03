@@ -12,7 +12,7 @@ const AccountFooter = () => {
       </div>
       <div>
         <Button>
-          <Link href="/customer-service">Serviço ao Ciente</Link>
+          <Link href="/faq">Serviço ao Ciente</Link>
         </Button>
       </div>
     </div>
