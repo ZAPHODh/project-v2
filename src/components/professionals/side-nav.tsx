@@ -7,14 +7,15 @@ import { useState } from "react";
 import { ModalProvider } from "@/lib/context/modal-context";
 import { NewProfessional } from "./new-professional";
 import { createProfessional } from "@/lib/data/api-data";
+import { ProfessionalData } from "../../../types/db";
 
 type ProfessionalNavType = {
-  professionals: Professional[];
+  professionals: ProfessionalData[];
 };
 
 export function ProfessionalNav({ professionals }: ProfessionalNavType) {
   const [cachedProfessionals, setCachedProfessionals] =
-    useState<Professional[]>(professionals);
+    useState<ProfessionalData[]>(professionals);
   const [showAddModal, setShowAddModal] = useState<boolean>();
   const { setProfessional } = useProfessional();
 

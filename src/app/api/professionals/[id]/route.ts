@@ -6,7 +6,14 @@ export async function GET(
   { params }: { params: { id: string } }
 ) {
   const professional = await prisma.professional.findUnique({
-    where: { id: params.id },
+    where: { id: await params.id },
+    include: {
+      sales: {
+        include: {
+          items: true,
+        },
+      },
+    },
   });
   if (!professional)
     return NextResponse.json(
@@ -32,6 +39,6 @@ export async function DELETE(
   req: Request,
   { params }: { params: { id: string } }
 ) {
-  await prisma.professional.delete({ where: { id: params.id } });
+  await prisma.professional.delete({ where: { id: await params.id } });
   return NextResponse.json({ message: "Profissional deletado." });
 }

@@ -32,13 +32,12 @@ export function ProfessionalDetails({ professional }: ProfessionalDetailsType) {
             professional.description || description
           ) : (
             <>
-              "Sem descrições disponíveis. Cadastre agora"
+              Sem descrições disponíveis.{" "}
               <button
+                className="text-black dark:text-white underline "
                 onClick={() => setAddDescripitonModal(true)}
-                type="button"
-                className="m-3 text-white my-2 flex items-center justify-center focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-primary-600 dark:hover:bg-primary-700 focus:outline-none dark:focus:ring-primary-800"
               >
-                Adicionar descrição
+                Cadastre agora.
               </button>
             </>
           )}
@@ -61,10 +60,10 @@ export function ProfessionalDetails({ professional }: ProfessionalDetailsType) {
         </div>
 
         <div>
-          <p className="text-sm font-medium text-gray-500">Birthday</p>
+          <p className="text-sm font-medium text-gray-500">Aniversário</p>
           <p className="font-semibold">
-            {professional.createdAt
-              ? new Date(professional.createdAt).toLocaleDateString()
+            {professional.birthDay
+              ? new Date(professional.birthDay).toLocaleDateString()
               : "N/A"}
           </p>
         </div>

@@ -7,7 +7,7 @@ const prefix = "/account";
 
 export const PAGELINKS = [
   { title: "Dados Cadastrados", href: `${prefix}` },
-  { title: "Endereços", href: `${prefix}/adress` },
+  { title: "Endereços", href: `${prefix}/address` },
 ];
 
 export const AccountNav = () => {

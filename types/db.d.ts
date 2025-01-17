@@ -1,5 +1,12 @@
-import { Expense, Professional, Salon, Service, User } from "@prisma/client";
-
+import {
+  Expense,
+  Professional,
+  Sale,
+  SaleItem,
+  Salon,
+  Service,
+  User,
+} from "@prisma/client";
 
 type salonData = Salon & {
   professionals?: Professional[];
@@ -12,4 +19,11 @@ type userData = User & {
 };
 type ExpenseData = Expense & {
   salon: Salon;
+};
+type ProfessionalData = Professional & {
+  sales: Sale[];
+};
+
+type SalesData = Sale & {
+  items: SaleItem;
 };

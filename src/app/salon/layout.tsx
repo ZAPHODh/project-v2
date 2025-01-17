@@ -20,6 +20,10 @@ const NAVLINKS = [
     title: "Profissionais",
     href: "/salon/professionals",
   },
+  {
+    title: "Agenda",
+    href: "/salon/scheduler",
+  },
 ];
 
 export default async function SalonLayout({

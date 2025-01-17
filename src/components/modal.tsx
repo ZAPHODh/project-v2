@@ -62,7 +62,7 @@ const Modal = ({
             >
               <DialogPanel
                 data-testid={dataTestId}
-                className={`flex flex-col justify-start w-full transform p-5 text-left align-middle transition-all max-h-[75vh] h-fit ${
+                className={` overflow-x-auto flex flex-col justify-start w-full transform p-5 text-left align-middle transition-all h-fit ${
                   sizeClasses[size]
                 } ${
                   search

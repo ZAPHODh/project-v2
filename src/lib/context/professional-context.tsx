@@ -1,11 +1,11 @@
 "use client";
 
-import { Professional } from "@prisma/client";
 import React, { createContext, Dispatch, useContext, useState } from "react";
+import { ProfessionalData } from "../../../types/db";
 
 interface ProfessionalContext {
-  professional: Professional | undefined;
-  setProfessional: Dispatch<Professional | undefined>;
+  professional: ProfessionalData | undefined;
+  setProfessional: Dispatch<ProfessionalData | undefined>;
 }
 
 const ModalContext = createContext<ProfessionalContext | null>(null);
@@ -17,9 +17,9 @@ interface ProfessionalProviderProps {
 export const ProfessionalProvider = ({
   children,
 }: ProfessionalProviderProps) => {
-  const [professional, setProfessional] = useState<Professional | undefined>(
-    undefined
-  );
+  const [professional, setProfessional] = useState<
+    ProfessionalData | undefined
+  >(undefined);
   return (
     <ModalContext.Provider value={{ professional, setProfessional }}>
       {children}

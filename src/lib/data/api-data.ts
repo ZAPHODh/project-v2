@@ -1,8 +1,8 @@
-import { Expense, Professional, Salon, Service, User } from "@prisma/client";
+import { Professional, Service, User } from "@prisma/client";
 import { getFormDataValue } from "../getFormDataValue";
 import { fetchAPI } from "./fetchAPI";
 
-import { ExpenseData, salonData } from "../../../types/db";
+import { ExpenseData, ProfessionalData, salonData } from "../../../types/db";
 
 export const signUp = async (data: FormData) => {
   const formData = {
@@ -60,10 +60,12 @@ export const deleteSalon = async (id: string) => {
 };
 
 // Professionals
-export const getProfessional = async (id: string): Promise<Professional> => {
+export const getProfessional = async (
+  id: string
+): Promise<ProfessionalData> => {
   return await fetchAPI(`/api/professionals/${id}`, "GET");
 };
-export const getProfessionals = async (): Promise<Professional[]> => {
+export const getProfessionals = async (): Promise<ProfessionalData[]> => {
   return await fetchAPI(`/api/professionals/`, "GET");
 };
 
@@ -120,4 +122,8 @@ export const editExpense = async (id: string, data: Partial<ExpenseData>) => {
 
 export const deleteExpense = async (id: string) => {
   return await fetchAPI(`/api/expenses/${id}`, "DELETE");
+};
+
+export const getTopServices = async (id: string): Promise<Service[]> => {
+  return await fetchAPI(`/api/top-services/${id}`, "GET");
 };

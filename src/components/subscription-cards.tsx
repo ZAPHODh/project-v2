@@ -1,5 +1,5 @@
 "use client";
-
+import { Card } from "flowbite-react";
 import getStripe from "@/lib/stripe/getStripe";
 import { Button } from "./ui/button";
 
@@ -29,17 +29,14 @@ export default function SubscriptionCards({
     }
   };
   return (
-    <div className="flex flex-col items-center">
+    <div className="flex flex-col items-center py-4">
       <h2 className="text-4xl font-bold mb-4">Escolha um Plano</h2>
       <div className="flex flex-col lg:flex-row gap-3 my-8">
         {plans.map((plan) => (
-          <div
-            key={plan.id}
-            className="w-full max-w-sm p-4 border border-gray-200 rounded-lg shadow sm:p-8 dark:bg-gray-800 dark:border-gray-700"
-          >
-            <h2 className="mb-4 text-xl font-medium text-gray-500 dark:text-gray-400">
+          <Card key={plan.id} className="max-w-sm">
+            <h4 className="mb-4 text-xl font-medium text-gray-500 dark:text-gray-400">
               {plan.name}
-            </h2>
+            </h4>
 
             <div className="flex items-baseline text-gray-900 dark:text-white">
               <span className="text-3xl font-semibold">R$</span>
@@ -67,7 +64,7 @@ export default function SubscriptionCards({
                     <svg
                       className={`${
                         JSON.parse(plan.metadata[key])
-                          ? "flex-shrink-0 w-4 h-4 "
+                          ? "flex-shrink-0 w-4 h-4 shrink-0 text-cyan-600 dark:text-cyan-500 "
                           : "flex-shrink-0 w-4 h-4 opacity-25 "
                       }`}
                       aria-hidden="true"
@@ -95,7 +92,7 @@ export default function SubscriptionCards({
             <Button onClick={() => handleSubscribe(plan.price_id)}>
               Inscrever
             </Button>
-          </div>
+          </Card>
         ))}
       </div>
     </div>

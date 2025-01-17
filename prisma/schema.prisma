@@ -12,12 +12,13 @@ model Professional {
   name        String
   categroy    String
   cpf         String?
-  adress      String?
+  address     String?
   profile     String?
   phone       String?
   email       String?
   description String?
   salonId     String
+  birthDay    DateTime?
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 

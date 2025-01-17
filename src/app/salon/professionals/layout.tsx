@@ -8,7 +8,6 @@ export default async function ProfessionalLayout({
   children: React.ReactNode;
 }>) {
   const professionals = await getProfessionals();
-
   return (
     <ProfessionalProvider>
       <div className="w-full py-4 gap-2 flex flex-col sm:flex-row ">

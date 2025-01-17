@@ -1,43 +1,48 @@
 "use client";
 
+import { editProfessional } from "@/lib/data/api-data";
 import { Professional } from "@prisma/client";
+import { CldImage } from "next-cloudinary";
+
+import { useEffect, useState } from "react";
+import { AvatarUploader } from "./avatar-uploader";
 
 type ProfessionalProfileType = {
   professional: Professional;
 };
 
 export function ProfessionalProfile({ professional }: ProfessionalProfileType) {
-  const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
-    if (file) {
-      console.log(file);
-    }
+  const [profile, setProfile] = useState<string | undefined | null>(
+    professional.profile
+  );
+  const onUploadSucess = async (url: string) => {
+    try {
+      await editProfessional(professional.id, { profile: url });
+      setProfile(url);
+    } catch {}
   };
+
+  useEffect(() => {
+    setProfile(professional.profile);
+  }, [professional]);
+
   return (
     <div className="w-full px-3 py-4 overflow-y-auto bg-gray-50 dark:bg-gray-800 rounded">
       <div className="flex flex-col items-start text-start">
-        {professional.profile ? (
-          <img
-            className="w-20 h-20 mb-3 rounded"
-            src={professional.profile}
+        {profile ? (
+          <CldImage
+            className="rounded"
+            width="80"
+            height="80"
+            crop={{
+              type: "auto",
+              source: true,
+            }}
+            src={profile}
             alt={`${professional.name}'s avatar`}
           />
         ) : (
-          <div className="w-20 h-20 mb-3 rounded flex items-center justify-center bg-gray-900 text-gray-500 hover:bg-gray-700 relative">
-            <label
-              htmlFor="add-image"
-              className="absolute inset-0 flex items-center justify-center cursor-pointer"
-            >
-              <span className="text-2xl font-bold">+</span>
-            </label>
-            <input
-              id="add-image"
-              type="file"
-              accept="image/*"
-              onChange={handleImageUpload}
-              className="hidden"
-            />
-          </div>
+          <AvatarUploader onUploadSuccess={onUploadSucess} />
         )}
         <h3 className="mb-1 text-xl font-bold">{professional.name}</h3>
         <div className="flex flex-row gap-1 items-center">
@@ -62,7 +67,7 @@ export function ProfessionalProfile({ professional }: ProfessionalProfileType) {
         </div>
         <div>
           <span className="font-medium text-gray-400">Endereço</span>
-          <p>{professional.adress || "Not provided"}</p>
+          <p>{professional.adress?.toUpperCase() || "Not provided"}</p>
         </div>
         <div>
           <span className="font-medium text-gray-400">Telefone</span>

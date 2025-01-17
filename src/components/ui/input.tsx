@@ -6,6 +6,7 @@ import {
   useState,
 } from "react";
 import { Eye, EyeOff } from "lucide-react";
+import { Label, TextInput } from "flowbite-react";
 
 type InputProps = Omit<
   React.InputHTMLAttributes<HTMLInputElement>,
@@ -15,11 +16,10 @@ type InputProps = Omit<
   errors?: Record<string, unknown>;
   touched?: Record<string, unknown>;
   name: string;
-  topLabel?: string;
 };
 
 const Input = forwardRef<HTMLInputElement, InputProps>(
-  ({ type, name, label, required, topLabel, value, ...props }, ref) => {
+  ({ type, name, label, required, value, ...props }, ref) => {
     const inputRef = useRef<HTMLInputElement>(null);
     const [showPassword, setShowPassword] = useState(false);
     const [inputType, setInputType] = useState(type);
@@ -32,33 +32,22 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
 
     return (
       <div className="flex flex-col w-full">
-        {topLabel && (
-          <span className="mb-2 text-sm font-medium text-gray-700">
-            {topLabel}
-          </span>
-        )}
         <div className="relative w-full my-4">
-          <input
+          <div className="mb-2 block">
+            <Label htmlFor={name} onClick={() => inputRef.current?.focus()}>
+              {label} {required && <span className="text-red-500">*</span>}
+            </Label>
+          </div>
+          <TextInput
             type={inputType}
             name={name}
             required={required}
             placeholder=" "
-            className="peer block w-full h-11 px-4 border rounded-md focus:outline-none focus:ring-2 focus:border-transparent dark:text-black"
             ref={inputRef}
             value={value}
             {...props}
           />
-          <label
-            htmlFor={name}
-            className={`absolute left-3 top-[-20px] text-gray-500 text-sm transition-all ${
-              value
-                ? "top-[-20px] text-xs"
-                : "peer-placeholder-shown:top-3 peer-placeholder-shown:text-gray-400 peer-focus:top-[-20px] peer-focus:text-xs"
-            }`}
-            onClick={() => inputRef.current?.focus()}
-          >
-            {label} {required && <span className="text-red-500">*</span>}
-          </label>
+
           {type === "password" && (
             <button
               type="button"
