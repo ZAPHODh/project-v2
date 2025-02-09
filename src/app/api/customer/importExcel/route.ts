@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "../../../../../prisma/prisma";
+
 import * as XLSX from "xlsx";
 
 export async function POST(req: NextRequest) {
@@ -57,6 +58,8 @@ export async function POST(req: NextRequest) {
   }
 }
 import { parse } from "date-fns";
+import { Customer } from "@prisma/client";
+import { CustomerData } from "../../../../../types/db";
 
 const parseDate = (date: string) => {
   try {

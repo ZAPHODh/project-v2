@@ -1,9 +1,9 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 
-export default function SuccessPage() {
+function SuccessPageContent() {
   const [status, setStatus] = useState("loading");
   const [customerEmail, setCustomerEmail] = useState("");
   const searchParams = useSearchParams();
@@ -52,5 +52,13 @@ export default function SuccessPage() {
         {customerEmail}.
       </p>
     </div>
+  );
+}
+
+export default function SuccessPage() {
+  return (
+    <Suspense fallback={<div>Carregando...</div>}>
+      <SuccessPageContent />
+    </Suspense>
   );
 }

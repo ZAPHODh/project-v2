@@ -1,12 +1,20 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "../../../../../prisma/prisma";
 
-export async function GET(
-  req: Request,
-  { params }: { params: { id: string } }
-) {
+// GET
+export async function GET(request: NextRequest) {
+  const searchParams = request.nextUrl.searchParams;
+  const id = searchParams.get("id");
+
+  if (!id) {
+    return NextResponse.json(
+      { error: "ID do profissional não fornecido." },
+      { status: 400 }
+    );
+  }
+
   const professional = await prisma.professional.findUnique({
-    where: { id: await params.id },
+    where: { id },
     include: {
       sales: {
         include: {
@@ -15,30 +23,50 @@ export async function GET(
       },
     },
   });
-  if (!professional)
+
+  if (!professional) {
     return NextResponse.json(
       { error: "Profissional não encontrado." },
       { status: 404 }
     );
+  }
+
   return NextResponse.json(professional);
 }
 
-export async function PUT(
-  req: Request,
-  { params }: { params: { id: string } }
-) {
-  const data = await req.json();
+// PUT (ou PATCH)
+export async function PUT(request: NextRequest) {
+  const searchParams = request.nextUrl.searchParams;
+  const id = searchParams.get("id");
+
+  if (!id) {
+    return NextResponse.json(
+      { error: "ID do profissional não fornecido." },
+      { status: 400 }
+    );
+  }
+
+  const data = await request.json();
   const professional = await prisma.professional.update({
-    where: { id: await params.id },
+    where: { id },
     data,
   });
+
   return NextResponse.json(professional);
 }
 
-export async function DELETE(
-  req: Request,
-  { params }: { params: { id: string } }
-) {
-  await prisma.professional.delete({ where: { id: await params.id } });
+// DELETE
+export async function DELETE(request: NextRequest) {
+  const searchParams = request.nextUrl.searchParams;
+  const id = searchParams.get("id");
+
+  if (!id) {
+    return NextResponse.json(
+      { error: "ID do profissional não fornecido." },
+      { status: 400 }
+    );
+  }
+
+  await prisma.professional.delete({ where: { id } });
   return NextResponse.json({ message: "Profissional deletado." });
 }

@@ -1,12 +1,15 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "../../../../../prisma/prisma";
 
 export async function GET(
-  req: Request,
-  { params }: { params: { id: string } }
+  request: NextRequest
+  // { params }: { params: Promise<{ id: string }> }
 ) {
+  const searchParams = request.nextUrl.searchParams;
+  const id = searchParams.get("id");
+  // const id = (await params).id;
   const professional = await prisma.professional.findUnique({
-    where: { id: await params.id },
+    where: { id: id as string },
     include: {
       sales: {
         include: {
@@ -24,18 +27,20 @@ export async function GET(
 }
 
 export async function PATCH(
-  req: Request,
+  request: NextRequest,
   {
     params,
   }: {
     params: Promise<{ id: string }>;
   }
 ) {
-  const data = await req.json();
+  const data = await request.json();
+  const searchParams = request.nextUrl.searchParams;
+  const id = searchParams.get("id");
+  // const id = (await params).id;
 
-  const id = (await params).id;
   const appointment = await prisma.appointment.update({
-    where: { id },
+    where: { id: id as string },
     data,
     include: {
       professional: true,
@@ -43,14 +48,13 @@ export async function PATCH(
       service: true,
     },
   });
-  console.log(appointment);
+
   return NextResponse.json(appointment);
 }
 
-export async function DELETE(
-  req: Request,
-  { params }: { params: { id: string } }
-) {
-  await prisma.professional.delete({ where: { id: await params.id } });
+export async function DELETE(request: NextRequest) {
+  const searchParams = request.nextUrl.searchParams;
+  const id = searchParams.get("id");
+  await prisma.professional.delete({ where: { id: id as string } });
   return NextResponse.json({ message: "Profissional deletado." });
 }

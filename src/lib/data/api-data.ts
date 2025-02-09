@@ -4,6 +4,8 @@ import {
   Expense,
   ExpenseCategory,
   Professional,
+  Sale,
+  SaleItem,
   Service,
   User,
 } from "@prisma/client";
@@ -104,7 +106,7 @@ export const deleteProfessional = async (id: string) => {
 
 // Services
 
-export const getServices = async (): Promise<Partial<Service[]>> => {
+export const getServices = async (): Promise<Service[]> => {
   return await fetchAPI(`/api/services/`, "GET");
 };
 
@@ -225,4 +227,12 @@ export const createExpenseCategory = async (
   data: Partial<ExpenseCategory>
 ): Promise<ExpenseCategory> => {
   return await fetchAPI(`/api/expenseCategory`, "POST", data);
+};
+
+//sale
+export const createSale = async (data: {
+  sale: Partial<Sale>;
+  saleItems: Partial<SaleItem>[];
+}): Promise<SalesData> => {
+  return await fetchAPI(`/api/sales`, "POST", data);
 };

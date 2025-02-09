@@ -14,16 +14,25 @@ import { useEffect, useState } from "react";
 import { exportToImage } from "@/lib/utils/exportAppointments";
 import { ModalProvider } from "@/lib/context/modal-context";
 import { NewExpenseModal } from "./new-expense";
-import { Expense, ExpenseCategory } from "@prisma/client";
+import {
+  Expense,
+  ExpenseCategory,
+  Professional,
+  Service,
+} from "@prisma/client";
 import { NewSaleModal } from "./new-sale";
 type FinanceTableType = {
   finances: (ExpenseData | SalesData)[];
   expenseCategories: ExpenseCategory[];
+  professionals: Professional[];
+  services: Service[];
 };
 
 export function FinanceTable({
   finances = [],
   expenseCategories = [],
+  professionals = [],
+  services = [],
 }: FinanceTableType) {
   const [cachedFinances, setCachedFinances] = useState(finances);
   const [cachedCategory, setCachedCategory] = useState(expenseCategories);
@@ -69,7 +78,9 @@ export function FinanceTable({
   const handleNewExpense = (expense: ExpenseData) => {
     setCachedFinances((prev) => [...prev, expense]);
   };
-  const handleNewSale = (sale: SalesData) => {};
+  const handleNewSale = (sale: SalesData) => {
+    setCachedFinances((prev) => [...prev, sale]);
+  };
   return (
     <div className="w-full p-4">
       <div className="flex flex-col lg:flex-row gap-3 items-center">
@@ -163,7 +174,13 @@ export function FinanceTable({
         )}
       </ModalProvider>
       <ModalProvider close={() => setNewSaleModal(false)}>
-        {newSaleModal && <NewSaleModal handleNewSale={handleNewSale} />}
+        {newSaleModal && (
+          <NewSaleModal
+            handleNewSale={handleNewSale}
+            professionals={professionals}
+            services={services}
+          />
+        )}
       </ModalProvider>
     </div>
   );

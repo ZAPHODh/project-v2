@@ -1,4 +1,3 @@
-import AccountDisplay from "@/components/account/account-display";
 import { AddressDisplay } from "@/components/account/address-display";
 import { auth } from "@/lib/auth/auth";
 import { getUser } from "@/lib/data/api-data";

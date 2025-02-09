@@ -36,3 +36,53 @@ export async function GET(req: NextRequest) {
     );
   }
 }
+export async function POST(req: Request) {
+  console.log("chegou aqui");
+  const userId = req.headers.get("X-User-Id");
+  const body = await req.json();
+  const { sale, saleItems } = body;
+  console.log(sale, saleItems, body);
+  const salon = await prisma.salon.findFirst({
+    where: {
+      ownerId: userId as string,
+    },
+  });
+
+  if (!salon) {
+    return NextResponse.json(
+      { error: "Salão não encontrado." },
+      { status: 404 }
+    );
+  }
+
+  try {
+    const newSale = await prisma.sale.create({
+      data: {
+        ...sale,
+        salonId: salon.id,
+      },
+      include: {
+        items: {
+          include: {
+            service: true,
+          },
+        },
+      },
+    });
+
+    const newSaleItems = await prisma.saleItem.createMany({
+      data: saleItems.map((item: any) => ({
+        ...item,
+        saleId: newSale.id,
+        total: item.price * item.quantity,
+      })),
+    });
+
+    return NextResponse.json({ newSale, newSaleItems }, { status: 201 });
+  } catch (error) {
+    return NextResponse.json(
+      { error: "Erro ao criar venda.", details: (error as Error).message },
+      { status: 500 }
+    );
+  }
+}
