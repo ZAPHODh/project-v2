@@ -1,6 +1,6 @@
 import { SalonBar } from "@/components/salon/nav-bar";
-
-import { getSalon } from "@/lib/data/api-data";
+import { auth } from "@/lib/auth/auth";
+import { redirect } from "next/navigation";
 
 const NAVLINKS = [
   {
@@ -34,6 +34,8 @@ export default async function SalonLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const session = await auth();
+  if (!session) return redirect("/login");
   return (
     <>
       <SalonBar navLinks={NAVLINKS} />
