@@ -15,11 +15,11 @@ import {
 export default function LoginForm() {
   return (
     <div className="w-96">
-      <form className="flex flex-col gap-10 w-full p-10">
+      <form className="flex flex-col w-full p-10">
         <h2>Efetue o login</h2>
         <Input label="Email" name="email"></Input>
         <Input type="password" label="Senha" name="password"></Input>
-        <div className="flex gap-3">
+        <div className="flex my-2">
           <Button formAction={signInWithCredentials}>Entrar</Button>
         </div>
         <div>

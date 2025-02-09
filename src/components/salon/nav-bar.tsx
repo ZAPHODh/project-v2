@@ -13,7 +13,7 @@ type NavBarType = {
 export function SalonBar({ navLinks = [] }: NavBarType) {
   const route = usePathname();
   return (
-    <nav className="relative isolate overflow-hidden w-screen h-14 sticky top-[55px] z-50 lg:px-4 backdrop-filter backdrop-blur-xl bg-opacity-5">
+    <nav className="relative isolate overflow-hidden w-screen h-16 lg:h-14 sticky top-[55px] z-50 lg:px-4 backdrop-filter backdrop-blur-xl bg-opacity-5 max-w-screen">
       <div
         className="absolute left-[max(-7rem,calc(50%-52rem))] top-1/2 -z-10 -translate-y-1/2 transform-gpu blur-2xl"
         aria-hidden="true"
@@ -40,7 +40,7 @@ export function SalonBar({ navLinks = [] }: NavBarType) {
       </div>
       <div className="sm:container h-full max-sm:px-3 flex items-center justify-between ">
         <div className="flex items-center gap-9">
-          <div className="flex flex-row items-center gap-5 text-sm font-medium text-muted-foreground ">
+          <div className="p-2 flex flex-row flex-wrap items-center gap-3 text-sm font-medium text-muted-foreground overflow-x-auto">
             {navLinks.map((item) => {
               const isActive = route === item.href;
               return (

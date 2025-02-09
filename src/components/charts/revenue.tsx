@@ -122,8 +122,6 @@ export default function Revenue() {
         <div className="flex justify-between items-center pt-5">
           <button
             id="dropdownDefaultButton"
-            data-dropdown-toggle="lastDaysdropdown"
-            data-dropdown-placement="bottom"
             className="text-sm font-medium text-gray-500 dark:text-gray-400 hover:text-gray-900 text-center inline-flex items-center dark:hover:text-white"
             type="button"
           >

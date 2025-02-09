@@ -3,7 +3,6 @@ import { prisma } from "../../../../prisma/prisma";
 
 export async function GET(req: NextRequest) {
   const userId = req.headers.get("X-User-Id");
-  console.log(userId);
   if (!userId) {
     return NextResponse.json(
       { error: "Parâmetro 'userId' é obrigatório." },

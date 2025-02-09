@@ -9,6 +9,7 @@ import { deleteSalon, getSalon } from "@/lib/data/api-data";
 import { redirect } from "next/navigation";
 
 import dynamic from "next/dynamic";
+import { Steps } from "@/components/steps";
 
 const Revenue = dynamic(() => import("@/components/charts/revenue"));
 
@@ -18,14 +19,15 @@ export default async function SalonPage() {
   const salon = await getSalon();
   if ("message" in salon) {
     return (
-      <>
+      <div className="w-full">
         <NoSalon />
         <UpgradeBanner />
-      </>
+      </div>
     );
   }
   return (
     <>
+      <Steps />
       <Revenue />
       <Profit />
     </>

@@ -1,11 +1,10 @@
-import CookieConsent from "@/components/cookie-consent";
 import Header from "@/components/landing-page/header";
 import TheProblem from "@/components/landing-page/the-problem";
 import TheSolution from "@/components/landing-page/the-solution";
 import SubscriptionCards from "@/components/subscription-cards";
-import UpgradeBanner from "@/components/upgrade-banner";
+
 import getPlans from "@/lib/stripe/getPlans";
-import { cookies } from "next/headers";
+
 const solutions = [
   {
     img: "/feito.jpg",

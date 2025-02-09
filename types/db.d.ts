@@ -1,5 +1,9 @@
 import {
+  Appointment,
+  Customer,
   Expense,
+  ExpenseCategory,
+  Product,
   Professional,
   Sale,
   SaleItem,
@@ -14,16 +18,33 @@ type salonData = Salon & {
   expenses?: Expense[];
 };
 
+type AppointmentData = Appointment & {
+  service: Service;
+  customer: Customer;
+  professional: Professional;
+};
 type userData = User & {
   salons: salonData[];
 };
 type ExpenseData = Expense & {
   salon: Salon;
+  category: ExpenseCategory;
 };
 type ProfessionalData = Professional & {
   sales: Sale[];
 };
 
 type SalesData = Sale & {
-  items: SaleItem;
+  items: SaleItemData[];
+};
+
+type SaleItemData = SaleItem & {
+  service: Service;
+  product: Product;
+};
+type Status = "pending" | "confirmed" | "canceled" | "completed";
+type CustomerData = Customer & {
+  appointments: AppointmentData[];
+  services: Service[];
+  sales: SalesData[];
 };

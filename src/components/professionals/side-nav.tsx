@@ -35,7 +35,7 @@ export function ProfessionalNav({ professionals }: ProfessionalNavType) {
         className="h-full w-full lg:w-80"
         aria-label="Sidebar"
       >
-        <div className="h-full px-3 py-4 overflow-y-auto bg-gray-50 dark:bg-gray-800 rounded">
+        <div className="h-full px-3 py-4 overflow-y-auto bg-gray-50 dark:bg-gray-900 rounded">
           <div className="py-3 flex items-center p-2 text-gray-900 rounded-lg dark:text-white group">
             <svg
               className="w-6 h-6 text-gray-800 dark:text-white"

@@ -15,9 +15,9 @@ export async function GET() {
 }
 
 export async function POST(req: Request) {
+  console.log("Post method invoked");
   try {
     const { email, name, password } = await req.json();
-
     if (!email || !password || !name) {
       return NextResponse.json(
         { error: "Todos os campos são obrigatórios." },

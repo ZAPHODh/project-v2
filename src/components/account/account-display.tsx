@@ -48,7 +48,7 @@ const AccountDisplay: React.FC<AccountDisplayProps> = ({ account }) => {
         .map(([key, value]) => (
           <div
             key={key}
-            className="p-4 mb-4 text-sm flex justify-between items-center border-b"
+            className=" rounded-lg bg-white shadow dark:bg-gray-800 p-4 mb-4 text-sm flex justify-between items-center border-b"
           >
             <div>
               <h3 className="font-semibold capitalize">{key}:</h3>

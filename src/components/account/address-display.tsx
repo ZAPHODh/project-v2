@@ -16,6 +16,7 @@ type AccountDisplayProps = {
 
 export const AddressDisplay: React.FC<AccountDisplayProps> = ({ account }) => {
   const [cachedAccount, setCachedAccount] = useState<Partial<User>>(account);
+
   const [isModalOpen, setModalOpen] = useState(false);
   const [currentField, setCurrentField] = useState<{
     key: keyof User;

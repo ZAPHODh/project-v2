@@ -66,8 +66,8 @@ const Modal = ({
                   sizeClasses[size]
                 } ${
                   search
-                    ? "bg-transparent shadow-none"
-                    : "bg-white dark:bg-black shadow-xl border rounded-lg"
+                    ? " shadow-none"
+                    : "bg-white dark:bg-gray-900 shadow-xl border rounded-lg"
                 }`}
               >
                 {children}

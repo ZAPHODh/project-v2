@@ -68,7 +68,7 @@ export default function RootLayout({
   return (
     <html lang="pt" suppressHydrationWarning>
       <body
-        className={`${regularFont.variable} ${codeFont.variable} antialiased`}
+        className={`${regularFont.variable} ${codeFont.variable} antialiased flex flex-col min-h-screen max-w-screen`}
       >
         <ThemeProvider
           attribute="class"
@@ -77,7 +77,7 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <Navbar navLinks={NAVLINKS} />
-          <main className="flex flex-col items-center sm:container mx-auto w-[88vw] max-w-screen">
+          <main className="flex flex-col items-center sm:container mx-auto w-[88vw] max-w-screen flex-grow">
             {children}
           </main>
           <CookieConsent />

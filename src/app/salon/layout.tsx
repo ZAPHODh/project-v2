@@ -1,5 +1,4 @@
 import { SalonBar } from "@/components/salon/nav-bar";
-import Stepper from "@/components/stepper";
 
 import { getSalon } from "@/lib/data/api-data";
 
@@ -13,8 +12,8 @@ const NAVLINKS = [
     href: "/salon/services",
   },
   {
-    title: "Despesas",
-    href: "/salon/expenses",
+    title: "Lançamentos",
+    href: "/salon/finance",
   },
   {
     title: "Profissionais",
@@ -24,6 +23,10 @@ const NAVLINKS = [
     title: "Agenda",
     href: "/salon/scheduler",
   },
+  {
+    title: "Clientes",
+    href: "/salon/customer",
+  },
 ];
 
 export default async function SalonLayout({
@@ -31,11 +34,9 @@ export default async function SalonLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const salon = await getSalon();
   return (
     <>
       <SalonBar navLinks={NAVLINKS} />
-      <Stepper steps={salon} />
       {children}
     </>
   );

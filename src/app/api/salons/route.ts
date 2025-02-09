@@ -48,6 +48,7 @@ export async function POST(req: Request) {
       name: data.name as string,
       address: data.address as string,
       ownerId: userId as string,
+      cep: data.cep as string,
     },
   });
 

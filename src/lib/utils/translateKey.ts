@@ -1,7 +1,29 @@
-import { Service, Salon, Professional } from "@prisma/client";
+import {
+  Service,
+  Salon,
+  Professional,
+  Customer,
+  Account,
+  User,
+} from "@prisma/client";
+import {
+  CustomerData,
+  ExpenseData,
+  SalesData,
+  Status,
+} from "../../../types/db";
 
 export const translateKey = (
-  key: keyof Service | keyof Salon | keyof Professional
+  key:
+    | keyof Service
+    | keyof Salon
+    | keyof Professional
+    | keyof Customer
+    | Status
+    | keyof CustomerData
+    | keyof ExpenseData
+    | keyof SalesData
+    | keyof User
 ) => {
   switch (key) {
     case "name":
@@ -26,10 +48,28 @@ export const translateKey = (
       return "CPF";
     case "profile":
       return "Foto";
-
     case "phone":
       return "Telefone";
-
+    case "cep":
+      return "CEP";
+    case "email":
+      return "Email";
+    case "birthDay":
+      return "Aniversário";
+    case "genre":
+      return "Gênero";
+    case "pending":
+      return "Pendente";
+    case "confirmed":
+      return "Confirmado";
+    case "canceled":
+      return "Cancelado";
+    case "completed":
+      return "Finalizado";
+    case "amount":
+      return "Valor";
+    case "subscriptionRole":
+      return "Plano";
     default:
       return key;
   }

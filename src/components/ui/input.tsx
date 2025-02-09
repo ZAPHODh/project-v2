@@ -32,7 +32,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
 
     return (
       <div className="flex flex-col w-full">
-        <div className="relative w-full my-4">
+        <div className="relative w-full my-2">
           <div className="mb-2 block">
             <Label htmlFor={name} onClick={() => inputRef.current?.focus()}>
               {label} {required && <span className="text-red-500">*</span>}
@@ -52,7 +52,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
             <button
               type="button"
               onClick={() => setShowPassword(!showPassword)}
-              className="absolute right-4 top-3 text-gray-500 hover:text-gray-700 focus:outline-none"
+              className="absolute right-4 top-10 text-gray-500 hover:text-gray-700 focus:outline-none"
             >
               {showPassword ? <Eye /> : <EyeOff />}
             </button>

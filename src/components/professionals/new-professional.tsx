@@ -16,7 +16,7 @@ export function NewProfessional({ onSave }: NewProfessionalType) {
 
   const profecionalsKey: (keyof Professional)[] = [
     "name",
-    "adress",
+    "address",
     "categroy",
     "cpf",
     "email",

@@ -67,7 +67,7 @@ export function ProfessionalProfile({ professional }: ProfessionalProfileType) {
         </div>
         <div>
           <span className="font-medium text-gray-400">Endereço</span>
-          <p>{professional.adress?.toUpperCase() || "Not provided"}</p>
+          <p>{professional.address?.toUpperCase() || "Not provided"}</p>
         </div>
         <div>
           <span className="font-medium text-gray-400">Telefone</span>

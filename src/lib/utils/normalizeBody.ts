@@ -1,4 +1,5 @@
 import { Expense, Sale, Service } from "@prisma/client";
+
 type schemas = {
   service: Service;
   expense: Expense;

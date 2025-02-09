@@ -2,42 +2,42 @@
 import { signOut } from "next-auth/react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-
+import { ListGroup } from "flowbite-react";
 const prefix = "/account";
 
 export const PAGELINKS = [
   { title: "Dados Cadastrados", href: `${prefix}` },
   { title: "Endereços", href: `${prefix}/address` },
+  { title: "Planos", href: `${prefix}/plans` },
 ];
 
 export const AccountNav = () => {
   const route = usePathname();
 
   return (
-    <div className="flex h-full lg:justify-center lg:items-center p-4 lg:px-4">
-      <ul className="flex flex-row w-full lg:flex-col lg:gap-4 justify-evenly items-center lg:items-start">
+    <div className="flex h-full lg:justify-center lg:items-center py-5">
+      <ListGroup className="w-full lg:w-48 ">
         {PAGELINKS.map((link) => {
           const isActive = route === link.href;
           return (
-            <li key={link.href} className="flex-1 text-center">
+            <ListGroup.Item key={link.href} active={isActive}>
               <Link
                 href={link.href}
-                className={`block py-2 px-4 ${isActive ? "font-semibold" : ""}`}
+                onClick={(e) => e.stopPropagation()}
+                className="w-full text-left"
               >
                 {link.title}
               </Link>
-            </li>
+            </ListGroup.Item>
           );
         })}
-        <li className="flex-1 text-center">
-          <button
-            onClick={() => signOut({ callbackUrl: "/" })}
-            className="block py-2 px-4"
-          >
-            Sair
-          </button>
-        </li>
-      </ul>
+        <ListGroup.Item
+          className="flex-1 text-center"
+          onClick={() => signOut({ callbackUrl: "/" })}
+        >
+          Sair
+        </ListGroup.Item>
+      </ListGroup>
     </div>
   );
 };

@@ -1,8 +1,23 @@
-import { Professional, Service, User } from "@prisma/client";
+import {
+  Appointment,
+  Customer,
+  Expense,
+  ExpenseCategory,
+  Professional,
+  Service,
+  User,
+} from "@prisma/client";
 import { getFormDataValue } from "../getFormDataValue";
 import { fetchAPI } from "./fetchAPI";
 
-import { ExpenseData, ProfessionalData, salonData } from "../../../types/db";
+import {
+  AppointmentData,
+  CustomerData,
+  ExpenseData,
+  ProfessionalData,
+  SalesData,
+  salonData,
+} from "../../../types/db";
 
 export const signUp = async (data: FormData) => {
   const formData = {
@@ -10,7 +25,10 @@ export const signUp = async (data: FormData) => {
     name: getFormDataValue("name", data),
     password: getFormDataValue("password", data),
   };
-  return await fetchAPI(`/api/users`, "POST", formData);
+  const response = await fetchAPI(`/api/users`, "POST", formData, {
+    skipAuth: true,
+  });
+  return response;
 };
 
 export const getUser = async (id: string): Promise<User | { name: string }> => {
@@ -112,7 +130,15 @@ export const getExpense = async (): Promise<ExpenseData> => {
   });
 };
 
-export const createExpense = async (data: Partial<ExpenseData>) => {
+export const getExpenses = async (): Promise<ExpenseData[]> => {
+  return await fetchAPI(`/api/expenses`, "GET", undefined, {
+    tags: ["expense"],
+  });
+};
+
+export const createExpense = async (
+  data: Partial<Expense>
+): Promise<ExpenseData> => {
   return await fetchAPI(`/api/expenses`, "POST", data);
 };
 
@@ -126,4 +152,77 @@ export const deleteExpense = async (id: string) => {
 
 export const getTopServices = async (id: string): Promise<Service[]> => {
   return await fetchAPI(`/api/top-services/${id}`, "GET");
+};
+
+//sales
+
+export const getSales = async (): Promise<SalesData[]> => {
+  return await fetchAPI(`/api/sales`, "GET", undefined, {
+    tags: ["sale"],
+  });
+};
+
+// Customer
+export const getCustomer = async (id: string): Promise<CustomerData> => {
+  return await fetchAPI(`/api/customer/${id}`, "GET");
+};
+export const editCustomer = async (
+  id: string,
+  data: Partial<CustomerData>
+): Promise<CustomerData> => {
+  return await fetchAPI(`/api/customer/${id}`, "PUT", data);
+};
+
+export const getCustomers = async (): Promise<Customer[]> => {
+  return await fetchAPI(`/api/customer/`, "GET");
+};
+
+export const createCustomer = async (
+  data: Partial<Customer>
+): Promise<Customer> => {
+  return await fetchAPI(`/api/customer`, "POST", data);
+};
+
+// Appointment
+export const getAppointment = async (id: string): Promise<Appointment> => {
+  return await fetchAPI(`/api/appointment/${id}`, "GET");
+};
+export const getAppointments = async (): Promise<AppointmentData[]> => {
+  return await fetchAPI(`/api/appointment/`, "GET");
+};
+
+export const createAppointment = async (
+  data: Partial<Appointment>
+): Promise<AppointmentData> => {
+  return await fetchAPI(`/api/appointment`, "POST", data);
+};
+
+export const editAppointment = async (
+  id: string,
+  data: Partial<Appointment>
+): Promise<AppointmentData> => {
+  return await fetchAPI(`/api/appointment/${id}`, "PATCH", data);
+};
+
+//expenseCategory
+export const getExpenseCategory = async (
+  id: string
+): Promise<ExpenseCategory> => {
+  return await fetchAPI(`/api/expenseCategory/${id}`, "GET");
+};
+export const editExpenseCategory = async (
+  id: string,
+  data: Partial<ExpenseCategory>
+): Promise<CustomerData> => {
+  return await fetchAPI(`/api/expenseCategory/${id}`, "PUT", data);
+};
+
+export const getExpensesCategory = async (): Promise<ExpenseCategory[]> => {
+  return await fetchAPI(`/api/expenseCategory/`, "GET");
+};
+
+export const createExpenseCategory = async (
+  data: Partial<ExpenseCategory>
+): Promise<ExpenseCategory> => {
+  return await fetchAPI(`/api/expenseCategory`, "POST", data);
 };
