@@ -34,8 +34,7 @@ export default function Header() {
         <p className="mb-6 text-lg font-normal text-gray-500 lg:text-xl sm:px-16 xl:px-48 dark:text-gray-40">
           Nossa plataforma foi criada para facilitar a gestão financeira do seu
           salão. Controle receitas e despesas, calcule comissões, acompanhe a
-          lucratividade de cada serviço e melhore a experiência dos seus
-          clientes com prompts personalizados.
+          lucratividade de cada serviço.
         </p>
         <VideoShowcase />
       </div>

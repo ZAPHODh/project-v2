@@ -7,7 +7,7 @@ import getPlans from "@/lib/stripe/getPlans";
 
 const solutions = [
   {
-    img: "/feito.jpg",
+    img: "https://img.freepik.com/fotos-gratis/conceito-do-negocio-e-do-risco-e-da-gerencia-na-opiniao-lateral-da-parede-cinzenta-e-branca-dedo-empurrando-a-torre-do-bloco-de-madeira_176474-6560.jpg?t=st=1739145880~exp=1739149480~hmac=b3cc6c01f4a92cd2793121a2428c2505cb375b05e4018f7a8255de6b04f4d5c7&w=1380",
     title: "Gestão Financeira Simplificada",
     subtitle: "Controle de Receitas e Despesas",
     description:
@@ -32,7 +32,7 @@ const solutions = [
     ],
   },
   {
-    img: "/feito.jpg",
+    img: "https://img.freepik.com/fotos-gratis/grafico-de-barras-digital-crescente-com-sobreposicao-de-mao-de-empresario_53876-97640.jpg?t=st=1739145976~exp=1739149576~hmac=b572e01affa213cee0680028bf37e471595ced182a9d45acae4d65f58f94905c&w=1380",
     title: "Insights de Lucratividade",
     subtitle: "Avalie seus Serviços com Precisão",
     description:
@@ -53,31 +53,6 @@ const solutions = [
         title: "Ajustes Personalizados de Preços",
         description:
           "Ajuste os preços dos serviços de forma inteligente, com base nas análises de lucratividade e tendências do mercado.",
-      },
-    ],
-  },
-  {
-    img: "/feito.jpg",
-    title: "Experiência do Cliente Personalizada",
-    subtitle: "Fidelize seus Clientes com Interações Inteligentes",
-    description:
-      "Crie uma experiência única para seus clientes com prompts personalizados, agendamento de serviços e recomendações de tratamentos.",
-    button: "Descubra Como",
-    importantTopics: [
-      {
-        title: "Promoções Personalizadas",
-        description:
-          "Ofereça descontos e pacotes personalizados para os clientes com base no histórico de serviços e preferências.",
-      },
-      {
-        title: "Feedback Pós-Serviço",
-        description:
-          "Receba feedback instantâneo dos clientes sobre seus serviços e use isso para aprimorar a experiência de atendimento.",
-      },
-      {
-        title: "Agendamentos e Lembretes",
-        description:
-          "Permita que seus clientes agendem serviços diretamente na plataforma e recebam lembretes automáticos sobre seus compromissos.",
       },
     ],
   },
