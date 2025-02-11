@@ -1,6 +1,7 @@
-import Image from "next/image";
+"use client";
+import Link from "next/link";
 import { Button } from "../ui/button";
-
+import { CldImage } from "next-cloudinary";
 type ImportantTopic = {
   title: string;
   description: string;
@@ -11,6 +12,7 @@ type Solution = {
   subtitle: string;
   description: string;
   button: string;
+  href: string;
   importantTopics: ImportantTopic[];
 };
 
@@ -36,16 +38,20 @@ export default function TheSolution({ solutions }: Solutions) {
                 {solution.description}
               </p>
               <Button className="px-6 py-2 rounded-md transition duration-300 w-32">
-                {solution.button}
+                <Link href={solution.href}>{solution.button}</Link>
               </Button>
             </div>
 
-            <div className="relative lg:w-1/2 w-full h-[350px]">
-              <Image
+            <div className="relative lg:w-1/2 w-full h-[350px] ">
+              <CldImage
                 src={solution.img}
                 alt={solution.title}
-                layout="fill"
-                objectFit="contain"
+                fill
+                style={{ objectFit: "contain" }}
+                crop={{
+                  type: "auto",
+                  source: true,
+                }}
               />
             </div>
           </div>

@@ -1,4 +1,5 @@
 import { FinanceTable } from "@/components/finance/finance-table";
+import { auth } from "@/lib/auth/auth";
 import {
   getExpenses,
   getExpensesCategory,
@@ -6,8 +7,11 @@ import {
   getSales,
   getServices,
 } from "@/lib/data/api-data";
+import { redirect } from "next/navigation";
 
 export default async function FinancePage() {
+  const session = await auth();
+  if (!session) return redirect("/login");
   const expenses = await getExpenses();
   const sales = await getSales();
   const finances = [...expenses, ...sales].sort(

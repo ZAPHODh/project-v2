@@ -14,6 +14,8 @@ import { Steps } from "@/components/steps";
 const Revenue = dynamic(() => import("@/components/charts/revenue"));
 
 export default async function SalonPage() {
+  const session = await auth();
+  if (!session) return redirect("/login");
   const salon = await getSalon();
   if ("message" in salon) {
     return (

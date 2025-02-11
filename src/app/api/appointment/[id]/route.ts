@@ -2,12 +2,10 @@ import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "../../../../../prisma/prisma";
 
 export async function GET(
-  request: NextRequest
-  // { params }: { params: Promise<{ id: string }> }
+  request: NextRequest,
+  { params }: { params: Promise<{ id: string }> }
 ) {
-  const searchParams = request.nextUrl.searchParams;
-  const id = searchParams.get("id");
-  // const id = (await params).id;
+  const id = (await params).id;
   const professional = await prisma.professional.findUnique({
     where: { id: id as string },
     include: {
@@ -35,9 +33,8 @@ export async function PATCH(
   }
 ) {
   const data = await request.json();
-  const searchParams = request.nextUrl.searchParams;
-  const id = searchParams.get("id");
-  // const id = (await params).id;
+
+  const id = (await params).id;
 
   const appointment = await prisma.appointment.update({
     where: { id: id as string },

@@ -11,7 +11,8 @@ export const fetchAPI = async (
   if (!options?.skipAuth) {
     const session = await auth();
 
-    if (!session || !session.user) {
+    if (!session || !session.user || !session.user.id) {
+      console.log(session);
       console.warn("Usuário não autenticado.");
       return;
     }

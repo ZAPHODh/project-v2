@@ -1,11 +1,11 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "../../../../../prisma/prisma";
 
-// GET
-export async function GET(request: NextRequest) {
-  const searchParams = request.nextUrl.searchParams;
-  const id = searchParams.get("id");
-
+export async function GET(
+  request: NextRequest,
+  { params }: { params: Promise<{ id: string }> }
+) {
+  const id = (await params).id;
   if (!id) {
     return NextResponse.json(
       { error: "ID do profissional não fornecido." },
@@ -34,11 +34,11 @@ export async function GET(request: NextRequest) {
   return NextResponse.json(professional);
 }
 
-// PUT (ou PATCH)
-export async function PUT(request: NextRequest) {
-  const searchParams = request.nextUrl.searchParams;
-  const id = searchParams.get("id");
-
+export async function PUT(
+  request: NextRequest,
+  { params }: { params: Promise<{ id: string }> }
+) {
+  const id = (await params).id;
   if (!id) {
     return NextResponse.json(
       { error: "ID do profissional não fornecido." },
@@ -55,10 +55,11 @@ export async function PUT(request: NextRequest) {
   return NextResponse.json(professional);
 }
 
-// DELETE
-export async function DELETE(request: NextRequest) {
-  const searchParams = request.nextUrl.searchParams;
-  const id = searchParams.get("id");
+export async function DELETE(
+  request: NextRequest,
+  { params }: { params: Promise<{ id: string }> }
+) {
+  const id = (await params).id;
 
   if (!id) {
     return NextResponse.json(

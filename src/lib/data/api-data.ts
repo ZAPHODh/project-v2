@@ -34,9 +34,7 @@ export const signUp = async (data: FormData) => {
 };
 
 export const getUser = async (id: string): Promise<User | { name: string }> => {
-  const response = await fetchAPI(`/api/users/${id}`, "GET", undefined, {
-    tags: ["user"],
-  });
+  const response = await fetchAPI(`/api/users/${id}`, "GET", undefined);
 
   if (!response.success) {
     throw new Error(response.message || "Erro ao buscar o usuário");

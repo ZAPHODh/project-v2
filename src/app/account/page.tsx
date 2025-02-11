@@ -6,8 +6,9 @@ import { redirect } from "next/navigation";
 
 export default async function AccountPage({}) {
   const session = await auth();
-  if (!session) redirect("/login");
-  const user = await getUser(session.user?.id as string);
+  if (!session || !session.user || !session.user.id) redirect("/login");
+
+  const user = await getUser(session.user.id);
 
   return (
     <div className="flex items-start w-full">

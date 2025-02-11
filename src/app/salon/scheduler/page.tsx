@@ -1,4 +1,5 @@
 import { Schedule } from "@/components/scheduler/schedule";
+import { auth } from "@/lib/auth/auth";
 import {
   getAppointments,
   getProfessionals,
@@ -8,6 +9,8 @@ import { Service } from "@prisma/client";
 import { redirect } from "next/navigation";
 
 export default async function SchedulePage() {
+  const session = await auth();
+  if (!session) return redirect("/login");
   const professionals = await getProfessionals();
   if (professionals.length === 0) redirect("/salon/professionals");
 

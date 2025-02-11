@@ -7,12 +7,13 @@ import getPlans from "@/lib/stripe/getPlans";
 
 const solutions = [
   {
-    img: "https://img.freepik.com/fotos-gratis/conceito-do-negocio-e-do-risco-e-da-gerencia-na-opiniao-lateral-da-parede-cinzenta-e-branca-dedo-empurrando-a-torre-do-bloco-de-madeira_176474-6560.jpg?t=st=1739145880~exp=1739149480~hmac=b3cc6c01f4a92cd2793121a2428c2505cb375b05e4018f7a8255de6b04f4d5c7&w=1380",
+    img: "https://res.cloudinary.com/dji3kuzho/image/upload/v1739146336/conceito-do-negocio-e-do-risco-e-da-gerencia-na-opiniao-lateral-da-parede-cinzenta-e-branca-dedo-empurrando-a-torre-do-bloco-de-madeira_176474-6560_ojkzjc.jpg",
     title: "Gestão Financeira Simplificada",
     subtitle: "Controle de Receitas e Despesas",
     description:
       "Nossa plataforma oferece uma interface intuitiva para registrar entradas e saídas de forma rápida e eficiente, ajudando a manter o controle financeiro do seu salão em dia.",
-    button: "Saiba Mais",
+    button: "Acesse agora!",
+    href: "/calc",
     importantTopics: [
       {
         title: "Registro de Entradas e Saídas",
@@ -32,12 +33,13 @@ const solutions = [
     ],
   },
   {
-    img: "https://img.freepik.com/fotos-gratis/grafico-de-barras-digital-crescente-com-sobreposicao-de-mao-de-empresario_53876-97640.jpg?t=st=1739145976~exp=1739149576~hmac=b572e01affa213cee0680028bf37e471595ced182a9d45acae4d65f58f94905c&w=1380",
+    img: "https://res.cloudinary.com/dji3kuzho/image/upload/v1739146345/grafico-de-barras-digital-crescente-com-sobreposicao-de-mao-de-empresario_53876-97640_ioyshn.avif",
     title: "Insights de Lucratividade",
     subtitle: "Avalie seus Serviços com Precisão",
     description:
       "Acompanhe o desempenho de cada serviço oferecido no seu salão. Descubra quais serviços geram mais lucro e onde é possível otimizar valores.",
     button: "Ver Relatório",
+    href: "/salon",
     importantTopics: [
       {
         title: "Análise de Lucratividade por Serviço",

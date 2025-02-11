@@ -1,13 +1,12 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "../../../../../prisma/prisma";
 
-// PUT
-export async function PUT(request: NextRequest) {
+export async function PUT(
+  request: NextRequest,
+  { params }: { params: Promise<{ id: string }> }
+) {
   try {
-    const searchParams = request.nextUrl.searchParams;
-    const id = searchParams.get("id");
-
-    // Verifica se o ID foi fornecido
+    const id = (await params).id;
     if (!id) {
       return NextResponse.json(
         { error: "ID do salão não fornecido." },
@@ -15,10 +14,8 @@ export async function PUT(request: NextRequest) {
       );
     }
 
-    // Obtém os dados do corpo da requisição
     const data = await request.json();
 
-    // Atualiza o salão no banco de dados
     const salon = await prisma.salon.update({
       where: { id },
       data,
@@ -33,13 +30,13 @@ export async function PUT(request: NextRequest) {
   }
 }
 
-// DELETE
-export async function DELETE(request: NextRequest) {
+export async function DELETE(
+  request: NextRequest,
+  { params }: { params: Promise<{ id: string }> }
+) {
   try {
-    const searchParams = request.nextUrl.searchParams;
-    const id = searchParams.get("id");
+    const id = (await params).id;
 
-    // Verifica se o ID foi fornecido
     if (!id) {
       return NextResponse.json(
         { error: "ID do salão não fornecido." },
@@ -47,7 +44,6 @@ export async function DELETE(request: NextRequest) {
       );
     }
 
-    // Verifica se o salão existe
     const salon = await prisma.salon.findUnique({
       where: { id },
     });
@@ -59,7 +55,6 @@ export async function DELETE(request: NextRequest) {
       );
     }
 
-    // Deleta o salão
     await prisma.salon.delete({ where: { id } });
 
     return NextResponse.json({ message: "Salão deletado com sucesso." });

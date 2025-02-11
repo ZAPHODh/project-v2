@@ -27,7 +27,7 @@ export async function GET(req: Request) {
 export async function POST(req: Request) {
   const userId = req.headers.get("X-User-Id");
   const body = await req.json();
-  console.log("oi");
+
   const salon = await prisma.salon.findFirst({
     where: {
       ownerId: userId as string,

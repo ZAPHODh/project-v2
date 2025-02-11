@@ -8,8 +8,6 @@ export default async function AccountLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const session = await auth();
-  if (!session) redirect("/login");
   return (
     <div className="w-full">
       <div className=" flex flex-col lg:flex-row w-full">

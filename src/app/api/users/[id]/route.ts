@@ -1,55 +1,41 @@
-import { NextRequest, NextResponse } from "next/server";
+"use server";
+import { NextResponse } from "next/server";
 import { prisma } from "../../../../../prisma/prisma";
 
 // GET
-export async function GET(request: NextRequest) {
-  try {
-    const searchParams = request.nextUrl.searchParams;
-    const id = searchParams.get("id");
+export async function GET(req: Request, { params }: any) {
+  const id = (await params).id;
 
-    // Verifica se o ID foi fornecido
-    if (!id) {
-      return NextResponse.json(
-        { success: false, message: "ID do usuário não fornecido." },
-        { status: 400 }
-      );
-    }
-
-    // Busca o usuário no banco de dados
-    const user = await prisma.user.findUnique({
-      where: { id },
-      select: {
-        id: true,
-        name: true,
-        email: true,
-        subscriptionRole: true,
-      },
-    });
-
-    if (!user) {
-      return NextResponse.json(
-        { success: false, message: "Usuário não encontrado." },
-        { status: 404 }
-      );
-    }
-
-    return NextResponse.json({ success: true, data: user });
-  } catch (error) {
-    console.error("Erro ao buscar o usuário:", error);
+  if (!id)
     return NextResponse.json(
-      { success: false, message: "Erro ao buscar o usuário." },
-      { status: 500 }
+      { success: false, message: "ID do usuário não fornecido." },
+      { status: 400 }
+    );
+
+  const user = await prisma.user.findUnique({
+    where: { id },
+    select: {
+      id: true,
+      name: true,
+      email: true,
+      subscriptionRole: true,
+    },
+  });
+
+  if (!user) {
+    return NextResponse.json(
+      { success: false, message: "Usuário não encontrado." },
+      { status: 404 }
     );
   }
+
+  return NextResponse.json({ success: true, data: user });
 }
 
-// PUT
-export async function PUT(request: NextRequest) {
+export async function PUT(request: Request, { params }: any) {
   try {
-    const searchParams = request.nextUrl.searchParams;
-    const id = searchParams.get("id");
+    const id = (await params).id;
 
-    // Verifica se o ID foi fornecido
     if (!id) {
       return NextResponse.json(
         { error: "ID do usuário não fornecido." },
@@ -57,11 +43,9 @@ export async function PUT(request: NextRequest) {
       );
     }
 
-    // Obtém os dados do corpo da requisição
     const body = await request.json();
     const { name, email } = body;
 
-    // Atualiza o usuário no banco de dados
     const updatedUser = await prisma.user.update({
       where: { id },
       data: { name, email },
@@ -78,12 +62,10 @@ export async function PUT(request: NextRequest) {
 }
 
 // DELETE
-export async function DELETE(request: NextRequest) {
+export async function DELETE({ params }: any) {
   try {
-    const searchParams = request.nextUrl.searchParams;
-    const id = searchParams.get("id");
+    const id = (await params).id;
 
-    // Verifica se o ID foi fornecido
     if (!id) {
       return NextResponse.json(
         { error: "ID do usuário não fornecido." },
@@ -91,7 +73,6 @@ export async function DELETE(request: NextRequest) {
       );
     }
 
-    // Deleta o usuário
     await prisma.user.delete({ where: { id } });
 
     return NextResponse.json({ message: "Usuário deletado com sucesso." });
