@@ -23,7 +23,7 @@ export async function PUT(
     });
 
     return NextResponse.json(service);
-  } catch (error) {
+  } catch {
     return NextResponse.json(
       { error: "Ocorreu um erro ao atualizar o serviço." },
       { status: 500 }
@@ -49,7 +49,7 @@ export async function DELETE(
     });
 
     return NextResponse.json({ message: "Serviço deletado com sucesso." });
-  } catch (error) {
+  } catch {
     return NextResponse.json(
       { error: "Ocorreu um erro ao deletar o serviço." },
       { status: 500 }

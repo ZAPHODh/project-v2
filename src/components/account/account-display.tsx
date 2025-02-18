@@ -36,7 +36,7 @@ const AccountDisplay: React.FC<AccountDisplayProps> = ({ account }) => {
       });
       setModalOpen(false);
       setCachedAccount((prevAccout) => ({ ...prevAccout, [key]: value }));
-    } catch (error) {
+    } catch {
       alert("Erro ao salvar a alteração.");
     }
   };

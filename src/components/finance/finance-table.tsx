@@ -14,12 +14,7 @@ import { useEffect, useState } from "react";
 import { exportToImage } from "@/lib/utils/exportAppointments";
 import { ModalProvider } from "@/lib/context/modal-context";
 import { NewExpenseModal } from "./new-expense";
-import {
-  Expense,
-  ExpenseCategory,
-  Professional,
-  Service,
-} from "@prisma/client";
+import { ExpenseCategory, Professional, Service } from "@prisma/client";
 import { NewSaleModal } from "./new-sale";
 type FinanceTableType = {
   finances: (ExpenseData | SalesData)[];

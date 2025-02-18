@@ -22,7 +22,7 @@ export async function PUT(
     });
 
     return NextResponse.json(salon);
-  } catch (error) {
+  } catch {
     return NextResponse.json(
       { error: "Ocorreu um erro ao atualizar o salão." },
       { status: 500 }
@@ -58,7 +58,7 @@ export async function DELETE(
     await prisma.salon.delete({ where: { id } });
 
     return NextResponse.json({ message: "Salão deletado com sucesso." });
-  } catch (error) {
+  } catch {
     return NextResponse.json(
       { error: "Ocorreu um erro ao deletar o salão." },
       { status: 500 }

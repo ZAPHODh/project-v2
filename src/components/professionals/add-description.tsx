@@ -5,7 +5,7 @@ import { useState } from "react";
 import Modal from "../modal";
 import Input from "../ui/input";
 import { Button } from "../ui/button";
-import { Professional, Service } from "@prisma/client";
+import { Professional } from "@prisma/client";
 import { translateKey } from "@/lib/utils/translateKey";
 
 type NewServiceType = {

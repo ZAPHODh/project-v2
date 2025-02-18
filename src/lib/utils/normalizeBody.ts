@@ -1,11 +1,3 @@
-import { Expense, Sale, Service } from "@prisma/client";
-
-type schemas = {
-  service: Service;
-  expense: Expense;
-  sale: Sale;
-};
-
 export function normalizeBody<schemas extends Record<string, any>>(
   body: Record<string, any>,
   schema: schemas

@@ -6,7 +6,6 @@ import { ModalProvider } from "@/lib/context/modal-context";
 import NewSalon from "./new-salon";
 import { Salon } from "@prisma/client";
 import { createSalon } from "@/lib/data/api-data";
-import { salonData } from "../../../types/db";
 
 export default function NoSalon() {
   const [showModal, setShowModal] = useState(false);

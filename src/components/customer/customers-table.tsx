@@ -12,11 +12,7 @@ import { format } from "date-fns";
 import { Customer } from "@prisma/client";
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import {
-  exportToExcel,
-  exportToImage,
-  exportToPDF,
-} from "@/lib/utils/exportAppointments";
+import { exportToImage } from "@/lib/utils/exportAppointments";
 import { ModalProvider } from "@/lib/context/modal-context";
 import { WarningExport } from "./warning-import";
 import { NewCustomerModal } from "./new-customer";

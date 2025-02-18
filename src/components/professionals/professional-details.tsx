@@ -1,7 +1,7 @@
 "use client";
 
 import { Professional } from "@prisma/client";
-import { Button } from "../ui/button";
+
 import { useState } from "react";
 import { ModalProvider } from "@/lib/context/modal-context";
 import AddDescription from "./add-description";

@@ -12,8 +12,6 @@ type ProfitType = {
 };
 
 export default function Profit({ expenses, revenue }: ProfitType) {
-  const [isOpen, setIsOpen] = useState(false);
-  const [selectedPeriod, setSelectedPeriod] = useState("Últimos 7 dias");
   const { theme } = useTheme();
 
   const groupDataByMonth = (data: (Expense | Sale)[], isExpense: boolean) => {
@@ -125,8 +123,6 @@ export default function Profit({ expenses, revenue }: ProfitType) {
   useEffect(() => {
     setChartOptions((prevCharts) => ({ ...prevCharts, tooltip: { theme } }));
   }, [theme]);
-
-  const options = ["Últimos 7 dias", "Últimos 30 dias", "Último Ano"];
 
   return (
     <div className="max-w-sm w-full bg-white rounded-lg shadow dark:bg-gray-800 p-4 md:p-6 max-h-[660px]">

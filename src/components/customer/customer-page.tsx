@@ -53,8 +53,9 @@ export function CustomerPage({ customer }: CustomerPageProps) {
               {customer.sales.map((sale) => (
                 <li key={sale.id}>
                   <strong>Serviço:</strong>{" "}
-                  {sale.items.map((item) => <p>{item.total}</p>) ||
-                    "Desconhecido"}
+                  {sale.items.map((item) => (
+                    <p key={item.id}>{item.total}</p>
+                  )) || "Desconhecido"}
                   <br />
                   <strong>Valor:</strong> R$ {sale.totalAmount.toFixed(2)}
                 </li>

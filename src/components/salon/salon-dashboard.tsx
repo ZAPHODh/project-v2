@@ -1,6 +1,6 @@
 import { Expense, Sale } from "@prisma/client";
 import { salonData } from "../../../types/db";
-import Revenue from "../charts/revenue";
+
 import Profit from "../charts/profit";
 import CustomerTabs from "./dashboard-customer";
 

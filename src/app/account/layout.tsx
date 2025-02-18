@@ -1,7 +1,5 @@
 import AccountFooter from "@/components/account/account-footer";
 import { AccountNav } from "@/components/account/account-nav";
-import { auth } from "@/lib/auth/auth";
-import { redirect } from "next/navigation";
 
 export default async function AccountLayout({
   children,

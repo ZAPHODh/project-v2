@@ -4,15 +4,8 @@ import { useModal } from "@/lib/context/modal-context";
 import Modal from "../modal";
 import Input from "../ui/input";
 import { Fragment, useState } from "react";
-import {
-  Button,
-  Card,
-  Datepicker,
-  Label,
-  Select,
-  Textarea,
-} from "flowbite-react";
-import { createExpense, createExpenseCategory } from "@/lib/data/api-data";
+import { Button, Datepicker, Label, Select, Textarea } from "flowbite-react";
+import { createExpense } from "@/lib/data/api-data";
 import { Expense, ExpenseCategory } from "@prisma/client";
 import { translateKey } from "@/lib/utils/translateKey";
 import { ExpenseData } from "../../../types/db";

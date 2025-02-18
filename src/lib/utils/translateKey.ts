@@ -1,11 +1,4 @@
-import {
-  Service,
-  Salon,
-  Professional,
-  Customer,
-  Account,
-  User,
-} from "@prisma/client";
+import { Service, Salon, Professional, Customer, User } from "@prisma/client";
 import {
   CustomerData,
   ExpenseData,
