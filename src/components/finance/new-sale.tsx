@@ -45,6 +45,7 @@ export function NewSaleModal({
   const onSubmit = async () => {
     if (!sale || !saleItems) return;
     const data = { sale, saleItems };
+    console.log(data);
     const newSale = await createSale(data);
     handleNewSale(newSale);
   };

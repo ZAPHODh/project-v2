@@ -1,8 +1,30 @@
 "use client";
+import { Sale } from "@prisma/client";
 import { ApexOptions } from "apexcharts";
 import Chart from "react-apexcharts";
+import { SalesData } from "../../../types/db";
 
-export default function Revenue() {
+interface RevenueProps {
+  sales: (Sale | SalesData)[];
+}
+
+export default function Revenue({ sales }: RevenueProps) {
+  const processSalesData = (sales: Sale[]) => {
+    const categories = sales.map((sale) => {
+      const date = new Date(sale.createdAt);
+      return date.toLocaleDateString("en-US", {
+        day: "numeric",
+        month: "long",
+      });
+    });
+
+    const data = sales.map((sale) => sale.totalAmount);
+
+    return { categories, data };
+  };
+
+  const { categories, data } = processSalesData(sales);
+
   const Options: ApexOptions = {
     chart: {
       height: "100%",
@@ -47,21 +69,13 @@ export default function Revenue() {
     },
     series: [
       {
-        name: "New users",
-        data: [6500, 6418, 6456, 6526, 6356, 6456],
+        name: "Total Sales",
+        data: data,
         color: "#1A56DB",
       },
     ],
     xaxis: {
-      categories: [
-        "01 February",
-        "02 February",
-        "03 February",
-        "04 February",
-        "05 February",
-        "06 February",
-        "07 February",
-      ],
+      categories: categories,
       labels: {
         show: false,
       },
@@ -83,14 +97,14 @@ export default function Revenue() {
   }
 
   return (
-    <div className=" m-4 max-w-sm w-full bg-white rounded-lg shadow dark:bg-gray-800 p-4 md:p-6">
+    <div className="max-w-sm w-full bg-white rounded-lg shadow-sm dark:bg-gray-800 p-4 md:p-6">
       <div className="flex justify-between">
         <div>
           <h5 className="leading-none text-3xl font-bold text-gray-900 dark:text-white pb-2">
-            32.4k
+            {sales.reduce((acc, sale) => acc + sale.totalAmount, 0).toFixed(2)}
           </h5>
           <p className="text-base font-normal text-gray-500 dark:text-gray-400">
-            Users this week
+            Total Sales
           </p>
         </div>
         <div className="flex items-center px-2.5 py-0.5 text-base font-semibold text-green-500 dark:text-green-500 text-center">

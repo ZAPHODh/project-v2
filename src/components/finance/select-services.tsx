@@ -78,58 +78,70 @@ export function SelectServices({ services, onSubmit }: SelectServicesType) {
           </div>
 
           {selectedServices.map((selectedService, index) => (
-            <div key={index} className="mb-4 flex items-center gap-4">
-              <Select
-                value={selectedService.id}
-                onChange={(e) => handleServiceChange(index, e.target.value)}
-                className="flex-1"
-              >
-                <option value="">Selecione um serviço</option>
-                {services.map((service) => (
-                  <option key={service.id} value={service.id}>
-                    {service.name}
-                  </option>
-                ))}
-              </Select>
+            <div key={index} className="flex flex-col">
+              <div className="mb-4 flex items-center gap-4">
+                <Select
+                  value={selectedService.id}
+                  onChange={(e) => handleServiceChange(index, e.target.value)}
+                  className="flex-1"
+                >
+                  <option value="">Selecione um serviço</option>
+                  {services.map((service) => (
+                    <option key={service.id} value={service.id}>
+                      {service.name}
+                    </option>
+                  ))}
+                </Select>
 
-              <div className="flex items-center gap-2">
-                <Button
-                  color="gray"
-                  onClick={() =>
-                    handleQuantityChange(index, selectedService.quantity - 1)
-                  }
-                >
-                  -
-                </Button>
-                <TextInput
-                  type="number"
-                  min={1}
-                  value={selectedService.quantity}
-                  onChange={(e) =>
-                    handleQuantityChange(index, Number(e.target.value))
-                  }
-                  className="w-16 text-center"
-                />
-                <Button
-                  color="gray"
-                  onClick={() =>
-                    handleQuantityChange(index, selectedService.quantity + 1)
-                  }
-                >
-                  +
-                </Button>
-                <button
-                  onClick={() => handleRemoveService(index)}
-                  className="text-red-500 hover:text-red-700"
-                >
-                  <XCircleIcon className="w-6 h-6" />
-                </button>
+                <div className="flex items-center gap-2">
+                  <Button
+                    color="gray"
+                    onClick={() =>
+                      handleQuantityChange(index, selectedService.quantity - 1)
+                    }
+                    className="h-6 w-6 flex items-center"
+                  >
+                    -
+                  </Button>
+                  <TextInput
+                    type="number"
+                    min={1}
+                    value={selectedService.quantity}
+                    onChange={(e) =>
+                      handleQuantityChange(index, Number(e.target.value))
+                    }
+                    className="w-12 text-center"
+                  />
+                  <Button
+                    color="gray"
+                    className="w-6 h-6 flex items-center"
+                    onClick={() =>
+                      handleQuantityChange(index, selectedService.quantity + 1)
+                    }
+                  >
+                    +
+                  </Button>
+                  <button
+                    onClick={() => handleRemoveService(index)}
+                    className="text-red-500 hover:text-red-700"
+                  >
+                    <XCircleIcon className="w-6 h-6" />
+                  </button>
+                </div>
               </div>
-              <span className="text-gray-500 text-sm">
-                Preço Unitário: R${selectedService.price.toFixed(2)}
+              <span className="text-gray-500 text-sm mt-[-10px]">
+                Valor unitário: R${selectedService.price.toFixed(2)}
               </span>
             </div>
           ))}
+          <p className="pt-2">
+            Total: R$
+            {selectedServices
+              .reduce((total, selectedService) => {
+                return total + selectedService.price * selectedService.quantity;
+              }, 0)
+              .toFixed(2)}
+          </p>
           <div className="flex gap-4 mt-4">
             <Button onClick={handleAddService} className="mt-2" color="gray">
               Adicionar Serviço

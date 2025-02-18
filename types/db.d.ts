@@ -16,6 +16,8 @@ type salonData = Salon & {
   professionals?: Professional[];
   services?: Service[];
   expenses?: Expense[];
+  sales: Sale[];
+  customers: CustomerData[];
 };
 
 type AppointmentData = Appointment & {

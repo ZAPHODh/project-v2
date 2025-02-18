@@ -20,6 +20,7 @@ export default async function FinancePage() {
   const categories = await getExpensesCategory();
   const professionals = await getProfessionals();
   const services = await getServices();
+  console.log(sales.map((sales) => sales.items));
   return (
     <FinanceTable
       finances={finances}

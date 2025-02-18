@@ -9,6 +9,15 @@ export async function GET(req: Request) {
 
   const salon = await prisma.salon.findFirst({
     where: { ownerId: userId as string },
+    include: {
+      customers: {
+        include: {
+          appointments: true,
+          sales: true,
+          services: true,
+        },
+      },
+    },
   });
 
   if (!salon) {

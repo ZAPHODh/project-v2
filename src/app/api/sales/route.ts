@@ -37,11 +37,10 @@ export async function GET(req: NextRequest) {
   }
 }
 export async function POST(req: Request) {
-  console.log("chegou aqui");
   const userId = req.headers.get("X-User-Id");
   const body = await req.json();
   const { sale, saleItems } = body;
-  console.log(sale, saleItems, body);
+
   const salon = await prisma.salon.findFirst({
     where: {
       ownerId: userId as string,
@@ -73,6 +72,7 @@ export async function POST(req: Request) {
     const newSaleItems = await prisma.saleItem.createMany({
       data: saleItems.map((item: any) => ({
         ...item,
+        id: undefined,
         saleId: newSale.id,
         total: item.price * item.quantity,
       })),
