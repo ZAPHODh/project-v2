@@ -23,6 +23,12 @@ export default function RegisterForm() {
             Termos de uso
           </Link>
         </p>
+        <p className="text-sm">
+          Já tem uma conta?
+          <Link className="underline" href="/login">
+            entrar
+          </Link>
+        </p>
       </form>
     </div>
   );

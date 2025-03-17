@@ -8,23 +8,22 @@ datasource db {
 }
 
 model Professional {
-  id          String    @id @default(cuid())
-  name        String
-  categroy    String
-  cpf         String?
-  address     String?
-  profile     String?
-  phone       String?
-  email       String?
-  description String?
-  salonId     String
-  birthDay    DateTime?
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @updatedAt
-
+  id           String        @id @default(cuid())
+  name         String
+  categroy     String
+  cpf          String?
+  address      String?
+  profile      String?
+  phone        String?
+  email        String?
+  description  String?
+  salonId      String
+  birthDay     DateTime?
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+  services     Service[] // Relação um-para-muitos (um Professional tem muitos Services)
   salon        Salon         @relation(fields: [salonId], references: [id], onDelete: Cascade)
-  services     Service[]     @relation("ProfessionalServices")
-  sales        Sale[]        @relation("ProfessionalSales")
+  sales        Sale[]
   Commission   Commission[]
   appointments Appointment[]
 }
@@ -60,7 +59,7 @@ model Sale {
 
   salon        Salon         @relation(fields: [salonId], references: [id], onDelete: Cascade)
   customer     Customer?     @relation(fields: [customerId], references: [id], onDelete: SetNull)
-  professional Professional? @relation("ProfessionalSales", fields: [professionalId], references: [id])
+  professional Professional? @relation(fields: [professionalId], references: [id])
   items        SaleItem[]
 }
 
@@ -79,21 +78,22 @@ model SaleItem {
 }
 
 model Service {
-  id          String   @id @default(cuid())
-  name        String
-  description String?
-  price       Float
-  duration    Int
-  salonId     String
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-
-  salon         Salon          @relation(fields: [salonId], references: [id], onDelete: Cascade)
-  professionals Professional[] @relation("ProfessionalServices")
-  saleItems     SaleItem[]
-  Appointment   Appointment[]
-  Customer      Customer?      @relation(fields: [customerId], references: [id])
-  customerId    String?
+  id             String          @id @default(cuid())
+  name           String
+  description    String?
+  price          Float
+  duration       Int
+  salonId        String
+  professionalId String? // Chave estrangeira para o Professional (opcional)
+  createdAt      DateTime        @default(now())
+  updatedAt      DateTime        @updatedAt
+  salon          Salon           @relation(fields: [salonId], references: [id], onDelete: Cascade)
+  professional   Professional?   @relation(fields: [professionalId], references: [id], onDelete: SetNull) // Relação com Professional
+  saleItems      SaleItem[]
+  Appointment    Appointment[]
+  Customer       Customer?       @relation(fields: [customerId], references: [id])
+  customerId     String?
+  Profitability  Profitability[]
 }
 
 model Product {
@@ -130,6 +130,7 @@ model Salon {
   commissions       Commission[]
   paymentMethods    PaymentMethod[]
   appointments      Appointment[]
+  Profitability     Profitability[]
 }
 
 model Expense {
@@ -265,4 +266,22 @@ model Appointment {
   professional Professional @relation(fields: [professionalId], references: [id], onDelete: Cascade)
   customer     Customer     @relation(fields: [customerId], references: [id], onDelete: SetNull)
   service      Service      @relation(fields: [serviceId], references: [id], onDelete: SetNull)
+}
+
+model Profitability {
+  id           String   @id @default(cuid())
+  salonId      String
+  serviceId    String
+  periodStart  DateTime
+  periodEnd    DateTime
+  idealRevenue Float
+  realRevenue  Float
+  totalCosts   Float
+  idealProfit  Float
+  realProfit   Float
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  salon   Salon   @relation(fields: [salonId], references: [id], onDelete: Cascade)
+  service Service @relation(fields: [serviceId], references: [id], onDelete: Cascade)
 }
